@@ -11419,18 +11419,17 @@ header.masthead .bg-circle-4 {
   cursor: pointer;
   position: relative;
   display: block;
-  max-width: 25rem;
-  max-height: 20rem;
   overflow: hidden;
+  max-height: 50rem;
 }
 
 .movie-slider .slider-item .slider-item-caption {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 8px;
   transition: all 0.2s ease-in-out;
   opacity: 0;
-  background-color: #ee0979;
+  background: linear-gradient(45deg, rgba(238,9,121,1) 29%, rgba(255,255,255,1) 100%);;
 }
 .movie-slider .slider-item .slider-item-caption:hover {
   opacity: 0.9;
@@ -11441,6 +11440,6 @@ header.masthead .bg-circle-4 {
 .slider-button:hover {
   border-color: #000;
   transition:none;
+  color: #fff;
   background-color: black;
-  color: white;
 }

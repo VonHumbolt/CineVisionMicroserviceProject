@@ -8,6 +8,7 @@ spring:
     username: 'postgres'
     url: jdbc:postgresql://localhost:5432/cine_vision
     password: '12345'
+    driver-class-name: org.postgresql.Driver
     jpa:
       properties:
         hibernate:
