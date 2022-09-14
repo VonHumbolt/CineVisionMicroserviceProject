@@ -11443,3 +11443,11 @@ header.masthead .bg-circle-4 {
   color: #fff;
   background-color: black;
 }
+
+.detail-bg{
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 600px;
+  opacity: 0.8;
+}

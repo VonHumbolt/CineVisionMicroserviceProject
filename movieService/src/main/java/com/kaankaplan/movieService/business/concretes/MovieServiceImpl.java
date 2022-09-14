@@ -24,4 +24,9 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieResponseDto> getAllComingSoonMovies() {
         return movieDao.getAllComingSoonMovies();
     }
+
+    @Override
+    public MovieResponseDto getMovieByMovieId(int movieId) {
+        return movieDao.getMovieById(movieId);
+    }
 }

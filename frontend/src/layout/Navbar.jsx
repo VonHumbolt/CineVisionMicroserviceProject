@@ -28,7 +28,7 @@ export default function Navbar() {
        
        
             <div class="offcanvas-body mt-5">
-                <div className='container'>
+                <div className='container mb-5'>
                     <div className='row justify-content-between align-items-center'>
                         <div className='col-sm-12 col-md-6 text-white text-start'>
                             <div className='row justify-content-center align-items-center'>

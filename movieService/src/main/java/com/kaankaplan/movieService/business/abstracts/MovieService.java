@@ -10,4 +10,7 @@ public interface MovieService {
     List<MovieResponseDto> getAllDisplayingMoviesInVision();
 
     List<MovieResponseDto> getAllComingSoonMovies();
+
+    MovieResponseDto getMovieByMovieId(int movieId);
+
 }

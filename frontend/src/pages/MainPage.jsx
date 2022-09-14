@@ -4,13 +4,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 import { MovieService } from '../services/movieService';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainPage() {
  
     const movieService = new MovieService();
-    
-    const [movies, setMovies] = useState([]);
 
+    const navigate = useNavigate();
+    const [movies, setMovies] = useState([]);
 
     async function getMovies(isComingSoon) {
         if (isComingSoon) {
@@ -116,140 +117,31 @@ export default function MainPage() {
             modules={[Pagination]}
             className="mySwiper movie-slider"
         >
-            {/* For loop vizyondakileri */}
-        
-        {movies.map(movie => (
-            <SwiperSlide>
-                <div className='slider-item'>
-                    <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                        <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                            <div class="mb-auto pt-5 text-white"><h3> {movie.movieName} </h3></div>
-                            <div class="p-2 d-grid gap-2">
-                                <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                                <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
+            {movies.map(movie => (
+                <SwiperSlide key={movie.movieId}>
+                    <div className='slider-item'>
+                        <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
+                            <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
+                                <div class="mb-auto pt-5 text-white"><h3> {movie.movieName} </h3></div>
+                                <div class="p-2 d-grid gap-2">
+                                    <a class="slider-button btn btn-light text-dark btn-md rounded"
+                                        onClick={()=> navigate("/movie/" + movie.movieId)}>
+                                        <strong>Yorum Yap </strong>
+                                    </a>
+                                    <a class="slider-button btn btn-light text-dark btn-md rounded"
+                                        onClick={()=> navigate("/movie/" + movie.movieId)}>
+                                        <strong> Bilet Al </strong>
+                                    </a>
+                                </div>
+                            
                             </div>
-                        
                         </div>
+                        <img src={movie.movieImageUrl}
+                            class="img-fluid mx-2" alt="..."/>
                     </div>
-                    <img src={movie.movieImageUrl}
-                        class="img-fluid mx-2" alt="..."/>
-                </div>
-            </SwiperSlide>
-        ))}
+                </SwiperSlide>
+            ))}
 
-        <SwiperSlide>
-            <div className='slider-item'>
-                <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                    <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                        <div class="mb-auto pt-5 text-white"><h3> TopGun Maverick </h3></div>
-                        <div class="p-2 d-grid gap-2">
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
-                        </div>
-                       
-                    </div>
-                </div>
-                <img src="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/top-gun/images/regions/us/onesheet.jpg"
-                    class="img-fluid mx-2" alt="..."/>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <div className='slider-item'>
-                <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                    <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                        <div class="mb-auto pt-5 text-white"><h3> TopGun Maverick </h3></div>
-                        <div class="p-2 d-grid gap-2">
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
-                        </div>
-                       
-                    </div>
-                </div>
-                <img src="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/top-gun/images/regions/us/onesheet.jpg"
-                    class="img-fluid mx-2" alt="..."/>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <div className='slider-item'>
-                <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                    <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                        <div class="mb-auto pt-5 text-white"><h3> TopGun Maverick </h3></div>
-                        <div class="p-2 d-grid gap-2">
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
-                        </div>
-                       
-                    </div>
-                </div>
-                <img src="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/top-gun/images/regions/us/onesheet.jpg"
-                    class="img-fluid mx-2" alt="..."/>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <div className='slider-item'>
-                <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                    <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                        <div class="mb-auto pt-5 text-white"><h3> TopGun Maverick </h3></div>
-                        <div class="p-2 d-grid gap-2">
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
-                        </div>
-                       
-                    </div>
-                </div>
-                <img src="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/top-gun/images/regions/us/onesheet.jpg"
-                    class="img-fluid mx-2" alt="..."/>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <div className='slider-item'>
-                <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                    <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                        <div class="mb-auto pt-5 text-white"><h3> TopGun Maverick </h3></div>
-                        <div class="p-2 d-grid gap-2">
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
-                        </div>
-                       
-                    </div>
-                </div>
-                <img src="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/top-gun/images/regions/us/onesheet.jpg"
-                    class="img-fluid mx-2" alt="..."/>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <div className='slider-item'>
-                <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                    <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                        <div class="mb-auto pt-5 text-white"><h3> TopGun Maverick </h3></div>
-                        <div class="p-2 d-grid gap-2">
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
-                        </div>
-                       
-                    </div>
-                </div>
-                <img src="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/top-gun/images/regions/us/onesheet.jpg"
-                    class="img-fluid mx-2" alt="..."/>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <div className='slider-item'>
-                <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
-                    <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
-                        <div class="mb-auto pt-5 text-white"><h3> TopGun Maverick </h3></div>
-                        <div class="p-2 d-grid gap-2">
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong>Yorum Yap </strong> </a>
-                            <a class="slider-button btn btn-light text-dark btn-md rounded"><strong> Bilet Al </strong></a>
-                        </div>
-                       
-                    </div>
-                </div>
-                <img src="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/top-gun/images/regions/us/onesheet.jpg"
-                    class="img-fluid mx-2" alt="..."/>
-            </div>
-        </SwiperSlide>
-       
         </Swiper>
 
    

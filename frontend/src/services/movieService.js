@@ -11,4 +11,8 @@ export class MovieService {
     getAllComingSoonMovies() {
         return axios.get(this.apiUrl + "comingSoonMovies");
     }
+
+    getMovieById(movieId) {
+        return axios.get(this.apiUrl + movieId);
+    }
 }
