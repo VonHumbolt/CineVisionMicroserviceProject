@@ -19,11 +19,11 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
     private int movieId;
-
     private String movieName;
     private String description;
     private int duration;
     private Date releaseDate;
+    private boolean isDisplay = false;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
