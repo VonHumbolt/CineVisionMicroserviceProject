@@ -38,4 +38,7 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private List<Actor> actors;
+
+    @OneToMany(mappedBy = "movie")
+    private List<City> cities;
 }

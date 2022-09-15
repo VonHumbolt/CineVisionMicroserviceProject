@@ -11448,6 +11448,41 @@ header.masthead .bg-circle-4 {
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 600px;
+  background-position: top center;
   opacity: 0.8;
+  height: 600px;
+}
+
+.detail-page-btn:hover {
+  border-color: #000;
+  background-color: black;
+  color: white;
+}
+
+.select-saloon-button{
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom-color: white;
+  border-bottom-width: 3px;
+}
+.select-saloon-button:hover{
+
+  background-color: #fff;
+  color: #000;
+  border-bottom-color: #000;
+
+}
+
+.comment-textarea{
+  opacity: 0.2;
+  height: 300px;
+}
+
+textarea{
+  background-color: grey;
+  color:#000;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
 }

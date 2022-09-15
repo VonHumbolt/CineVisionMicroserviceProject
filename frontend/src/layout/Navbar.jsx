@@ -39,7 +39,7 @@ export default function Navbar() {
                                 <div className='col-sm-6'>
                                     <h3>Top Gun Maverick</h3>
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae quasi voluptatibus veniam eligendi mollitia repellat et pariatur unde, suscipit deleniti autem incidunt sit, nobis ut a facere neque molestias adipisci.</p>
-                                    <a class="slider-button btn btn-light text-dark btn-md rounded"> <strong>Bilet Al </strong></a>
+                                    <a class="slider-button btn btn-light btn-md rounded"> <strong>Bilet Al </strong></a>
                                 </div>
                             </div>
                         </div>

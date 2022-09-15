@@ -9,11 +9,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/cine_vision
     password: '12345'
     driver-class-name: org.postgresql.Driver
-    jpa:
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
-          format_sql: 'true'
+  jpa:
+    properties:
       hibernate:
-        ddl-auto: update
-      show-sql: 'true'
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
