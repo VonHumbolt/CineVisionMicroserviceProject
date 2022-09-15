@@ -141,6 +141,7 @@ export default function MainPage() {
                     </div>
                 </SwiperSlide>
             ))}
+            
 
         </Swiper>
 

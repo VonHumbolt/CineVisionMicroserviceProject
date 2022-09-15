@@ -8,18 +8,20 @@ export default function Footer() {
             <div class="container px-5">
               <div className='row justify-content-evenly align-items-center'>
                 <div className='col'>
-                  <p className='m-1 text-center text-white'>Vizyonda</p>
-                  <p className='m-1 text-center text-white'>Yakında</p>
-                  <p className='m-1 text-center text-white'>Sinemalar</p>
+                  <p className='m-1 lead text-center text-white'>Vizyonda</p>
+                  <p className='m-1 lead text-center text-white'>Yakında</p>
+                  <p className='m-1 lead text-center text-white'>Sinemalar</p>
                 </div>
                 <div className='col'>
-                  <p className='m-1 text-center text-white'>E-Bilet</p>
-                  <p className='m-1 text-center text-white'>İade İşlemleri</p>
-                  <p className='m-1 text-center text-white'>Satış Sözleşmesi</p>
+                  <p className='m-1 lead text-center text-white'>E-Bilet</p>
+                  <p className='m-1 lead text-center text-white'>İade İşlemleri</p>
+                  <p className='m-1 lead text-center text-white'>Satış Sözleşmesi</p>
                 </div>
               </div>
               <p class="mt-5 text-center text-white small">
-                Copyright &copy; CineVision 2022
+                <strong>
+                   Copyright &copy; CineVision 2022
+                </strong> 
               </p>
             </div>
         </footer>

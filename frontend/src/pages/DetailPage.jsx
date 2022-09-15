@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper";
 import { ActorService } from '../services/actorService';
 import { CityService } from '../services/cityService';
 import { MovieService } from '../services/movieService';
+import dateConvert from '../utils/dateConverter';
 
 export default function DetailPage() {
     let {movieId} = useParams();
+    const navigate = useNavigate();
 
     const movieService = new MovieService()
     const cityService = new CityService()
@@ -13,6 +19,7 @@ export default function DetailPage() {
 
     const [movie, setMovie] = useState({})
     const [actors, setActors] = useState([])
+    const [otherMovies, setOtherMovies] = useState([])
     const [cinemaSaloons, setCinemaSaloons] = useState([])
     const [selectedCity, setSelectedCity] = useState({})
 
@@ -21,16 +28,21 @@ export default function DetailPage() {
         movieService.getMovieById(movieId).then(result => setMovie(result.data));
         actorService.getActorsByMovieId(movieId).then(result => setActors(result.data))
         cityService.getCitiesByMovieId(movieId).then(result => setCinemaSaloons(result.data))
+        movieService.getAllDisplayingMovies().then(result => {
+
+            const films = result.data.filter(m => m.movieId != movieId);
+            setOtherMovies(films);
+        })
 
     }, [])
     
-
+// style={{ backgroundImage: `url(${movie.movieImageUrl})`}}
   return (
     <div>
-        <section className='detail-bg pt-5 ' style={{backgroundImage: `url(${movie.movieImageUrl})`}}>
+        <section className='detail-bg pt-5' >
             <div className=' container mt-5'>
-                <div className='row pt-5  justify-content-center align-items-center'>
-                    <div className='col-sm-12 col-md-6 pt-5 text-center' >
+                <div className='row gx-0 pt-2 justify-content-center align-items-start'>
+                    <div className='col-sm-12 col-md-6 text-center mb-4' >
                         <img className='img-thumbnail w-50' src={movie.movieImageUrl} />
                     </div>
                     <div className='col-sm-12 col-md-6 text-start text-light'>
@@ -41,7 +53,7 @@ export default function DetailPage() {
                             actor.actorName + " ,"
                         ))}
                         </h5>
-                        <div class="row justify-content-start align-items-end mt-5">
+                        <div class="row gy-1 justify-content-start align-items-end mt-5">
                         
                             <div className='col-sm-4'>
                                 <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"><strong>Bilet Al </strong></button>
@@ -65,7 +77,7 @@ export default function DetailPage() {
             <div className='container'>
                 <div className='row justify-content-between'>
                     <div className='col-sm-4 text-start'>
-                        <p> <strong> Vizyon Tarihi: </strong> {movie.releaseDate}</p>
+                        <p> <strong> Vizyon Tarihi: </strong> {dateConvert( movie.releaseDate) }</p>
                         <p> <strong>Süre: </strong>{movie.duration} Dakika</p>
                         <p><strong>Tür: </strong>{movie.categoryName}</p>
                     </div>
@@ -94,27 +106,66 @@ export default function DetailPage() {
         </section>
 
         {/* Comment Modal */}
-        <section className='p-3'>
+        <section className='pt-3 pb-5 px-2'>
             <div className='container'>
-                <div className='row justify-content-start align-items-start'>
+                <div className='row gy-2 justify-content-start align-items-start'>
                     <div className='col-sm-12 col-md-6 text-start'>
                        <h3>Yorumlar</h3>
                        {/* Yorumları listele */}
                        <p className='lead mt-4'>İlk Yorumu sen yaz</p>
                        <hr />
                     </div>
-                    <div className='col-sm-12 col-md-6 comment-textarea text-start'>
-                        <h3>Yorumlar</h3>
-
-                        <textarea placeholder='Yorumunuz'></textarea>
-
-                        <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"><strong>Gönder</strong></button>
-                        
+                    <div className='col-sm-12 col-md-6 text-start'>
+                        <h3>Yorum Yap</h3>
+                            <textarea className='text-dark mb-3' placeholder='Yorumunuz'></textarea>
+                            <button class="comment-btn btn btn-dark btn-lg col-12" type="button"><strong>Gönder</strong></button>
                     </div>
                 </div>
             </div>
         </section>
 
+        {/* Other Movies */}
+        <section className='p-5'>
+            
+            <h3 className='text-center mb-4'>Vizyondaki Diğer Filmler</h3>
+            <Swiper
+                slidesPerView={5}
+                spaceBetween={0}
+                pagination={{
+                    clickable: true,
+                }}
+                modules={[Pagination]}
+                className="mySwiper movie-slider"
+            >
+                {otherMovies.map(movie => (
+                    <SwiperSlide key={movie.movieId}>
+                        <div className='slider-item'>
+                            <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
+                                <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
+                                    <div class="mb-auto pt-5 text-white"><h3> {movie.movieName} </h3></div>
+                                    <div class="p-2 d-grid gap-2">
+                                        <a class="slider-button btn btn-light btn-md rounded"
+                                            onClick={()=> navigate("/movie/" + movie.movieId)}>
+                                            <strong>Yorum Yap </strong>
+                                        </a>
+                                        <a class="slider-button btn btn-light btn-md rounded"
+                                            onClick={()=> {
+                                                navigate("/movie/" + movie.movieId)
+                                            }
+                                            }>
+                                            <strong> Bilet Al </strong>
+                                        </a>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            <img src={movie.movieImageUrl}
+                                class="img-fluid mx-2" alt="..."/>
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </section>
 
 
         {/* Saloon Modal */}

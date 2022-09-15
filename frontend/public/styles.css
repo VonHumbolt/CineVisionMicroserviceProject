@@ -11446,17 +11446,39 @@ header.masthead .bg-circle-4 {
 
 .detail-bg{
   position: relative;
+  display: grid;
+  place-content: center;
+  
+  /* background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  opacity: 0.8; */
+  min-height: 600px;
+}
+.detail-bg::after{
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: pink;
+  background-image: url("https://tr.web.img4.acsta.net/pictures/22/08/22/16/29/5693673.jpg"); 
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
   opacity: 0.8;
-  height: 600px;
+  filter: blur(8px);
 }
 
 .detail-page-btn:hover {
   border-color: #000;
   background-color: black;
   color: white;
+}
+
+.comment-btn:hover {
+  border-color: #000;
+  background-color: white;
+  color: black;
 }
 
 .select-saloon-button{
@@ -11471,18 +11493,41 @@ header.masthead .bg-circle-4 {
   background-color: #fff;
   color: #000;
   border-bottom-color: #000;
-
-}
-
-.comment-textarea{
-  opacity: 0.2;
-  height: 300px;
 }
 
 textarea{
-  background-color: grey;
-  color:#000;
+  position: relative;
+  display: grid;
+  place-content: center;
   width: 100%;
   height: 100%;
+  z-index: 0;
+  border: 0;
   padding: 20px;
+
+}
+
+textarea::after{
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: grey;
+  opacity: 0.3;
+  color: #000;
+}
+
+.search-input{
+  visibility: hidden;
+  border-top-right-radius: 10px;
+  position: absolute;
+  right: -50px;
+  width: 100px;
+  transition: 1s;
+}
+
+.search-btn{
+  background-color: inherit;
+  color: white;
+  border: none;
 }
