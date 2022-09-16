@@ -8,23 +8,29 @@ import { ActorService } from '../services/actorService';
 import { CityService } from '../services/cityService';
 import { MovieService } from '../services/movieService';
 import dateConvert from '../utils/dateConverter';
+import dateConvertForTicket from '../utils/dateConvertForTicket';
+import { SaloonTimeService } from '../services/saloonTimeService';
 
 export default function DetailPage() {
     let {movieId} = useParams();
     const navigate = useNavigate();
+    let date = new Date();
 
     const movieService = new MovieService()
     const cityService = new CityService()
     const actorService = new ActorService()
+    const saloonTimeService = new SaloonTimeService();
 
     const [movie, setMovie] = useState({})
     const [actors, setActors] = useState([])
     const [otherMovies, setOtherMovies] = useState([])
     const [cinemaSaloons, setCinemaSaloons] = useState([])
     const [selectedCity, setSelectedCity] = useState({})
+    const [selectedSaloon, setSelectedSaloon] = useState(null)
+    const [saloonTimes, setSaloonTimes] = useState([])
 
     useEffect(() => {
-    
+        
         movieService.getMovieById(movieId).then(result => setMovie(result.data));
         actorService.getActorsByMovieId(movieId).then(result => setActors(result.data))
         cityService.getCitiesByMovieId(movieId).then(result => setCinemaSaloons(result.data))
@@ -36,6 +42,12 @@ export default function DetailPage() {
 
     }, [])
     
+    function getSaloonTimes(saloonId, movieId) {
+        saloonTimeService.getMovieSaloonTimeSaloonAndMovieId(saloonId, movieId).then(result => {
+            setSaloonTimes(result.data);
+        })
+    }
+
 // style={{ backgroundImage: `url(${movie.movieImageUrl})`}}
   return (
     <div>
@@ -89,7 +101,7 @@ export default function DetailPage() {
         </section>
 
         {/* Ticket Buy Section */}
-        <section className='pt-1 pb-5'>
+        <section className='pt-1 pb-3'>
             <div className='container bg-primary rounded'>
                 <div className='row p-5'>
                     <div className='col-sm-4 mt-2 text-end text-light'>
@@ -104,6 +116,44 @@ export default function DetailPage() {
                 </div>
             </div>
         </section>
+
+
+        {/* Ticket Detail Section */}
+        {selectedSaloon ? (
+            <section className='px-5 py-1 pb-5'>
+                <hr />
+                <div className='container py-2'>
+                    <ul class="nav justify-content-center">
+                        {
+                            [0,1,2,3,4,5,6].map((i) => (
+                                <li class="nav-item">
+                                    <a class="nav-link active date-converter-ticket" aria-current="page"
+                                         href="#!">
+                                        {dateConvertForTicket(new Date().setDate(date.getDate() + i))}
+                                    </a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    
+                </div>
+                <hr />
+
+                <div className='container bg-primary rounded'>
+                    <h3 className='text-light p-3'>{selectedSaloon?.saloonName}</h3>
+                </div>
+                <div className='container pb-4'>
+                    {saloonTimes?.map(time => (
+                        <button className='saloonTime-btn btn btn-outline-dark mx-2 mt-3'>
+                            <strong>{time.movieBeginTime} </strong>
+                        </button>
+                    ))}
+                </div>
+                <hr />
+
+            </section>
+        ): null}
+
 
         {/* Comment Modal */}
         <section className='pt-3 pb-5 px-2'>
@@ -207,7 +257,10 @@ export default function DetailPage() {
                     </div>
                     <div class="modal-body">
                         {selectedCity?.saloon?.map(s => (
-                            <a className='text-start text-dark' href='#!'
+                            <a className='text-start text-dark' href='#!' onClick={() =>  {
+                                setSelectedSaloon(s)
+                                getSaloonTimes(s.saloonId, movieId)
+                            }}
                             data-bs-target="#saloonModal2" data-bs-toggle="modal" data-bs-dismiss="modal" 
                             style={{textDecoration:"none"}}>
                                 <h6 className='ps-1'>{s.saloonName}</h6>

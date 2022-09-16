@@ -1,7 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { MovieService } from '../services/movieService';
 
 export default function Navbar() {
+
+    const navigate = useNavigate()
+    const movieService = new MovieService();
+
+    const [moviesInVision, setMoviesInVision] = useState([])
+    const [comingSoonMovies, setComingSoonMovies] = useState([])
+
+    useEffect(() => {
+      
+        movieService.getAllDisplayingMovies().then(result => setMoviesInVision(result.data))
+        movieService.getAllComingSoonMovies().then(result => setComingSoonMovies(result.data))
+
+    }, [])
+    
+
 
     function showSearchInputBar() {
         let searchBar = document.querySelector(".search-input");
@@ -52,31 +68,46 @@ export default function Navbar() {
                                     className="img-fluid" alt="..."/>
                                 </div>
                                 <div className='col-sm-6'>
-                                    <h3>Top Gun Maverick</h3>
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae quasi voluptatibus veniam eligendi mollitia repellat et pariatur unde, suscipit deleniti autem incidunt sit, nobis ut a facere neque molestias adipisci.</p>
-                                    <a class="slider-button btn btn-light btn-md rounded"> <strong>Bilet Al </strong></a>
+                                    <h3>{moviesInVision[0]?.movieName}</h3>
+                                    <p className='last-movie-p'>{moviesInVision[0]?.description}</p>
+                                    <a class="slider-button btn btn-light btn-md rounded"
+                                         onClick={()=> navigate("/movie/" + moviesInVision[0].movieId)}>
+                                         <strong>Bilet Al </strong>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div className='col-sm-12 col-md-6'>
-                            <div className='row justify-content-center align-items-center'>
-                                <div className='col-sm-6'>
-                                    <h3>Vizyondakiler</h3>
+                            <div className='row justify-content-center align-items-start'>
+                                <div className='col-sm-7'>
+                                    <h3 className='text-start ms-3'>Vizyondakiler</h3>
                                     {/* For loop sadece 5 tanesi*/}
-                                    <p>Movie-1</p>
-                                    <p>Movie-1</p>
-                                    <p>Movie-1</p>
-                                    <p>Movie-1</p>
-                                    <p>Tümü</p>
+                                    <div className='ms-3 mt-2'>
+                                        {moviesInVision.map(movie => (
+                                            <p className='nav-movie-p text-start  text-decoration-none' href='#!'
+                                                onClick={() => navigate("/movie/"+ movie.movieId)}>
+                                                {movie.movieName}
+                                            </p>
+
+                                        ))}
+
+                                    </div>
+                                    
+                                    <a href='#!' className='text-decoration-none'><strong> Tümü </strong> </a>
                                 </div>
-                                <div className='col-sm-6'>
-                                    <h3>Yakında</h3>
+                                <div className='col-sm-5'>
+                                    <h3 className='text-start ms-3'>Yakında</h3>
                                     {/* For loop */}
-                                    <p>Movie-1</p>
-                                    <p>Movie-1</p>
-                                    <p>Movie-1</p>
-                                    <p>Movie-1</p>
-                                    <p>Tümü</p>
+                                    <div className='ms-3 mt-2'>
+                                        {comingSoonMovies.map(movie => (
+                                             <p className='nav-movie-p text-start text-decoration-none' href='#!'
+                                                onClick={() => navigate("/movie/"+ movie.movieId)}>
+                                                {movie.movieName}
+                                            </p>
+                                        ))}
+
+                                    </div>
+                                    <a href='#!' className='text-decoration-none'><strong> Tümü </strong> </a>
                                 </div>
                             </div>
                         </div>

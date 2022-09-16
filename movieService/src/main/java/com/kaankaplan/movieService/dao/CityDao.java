@@ -10,4 +10,5 @@ import java.util.List;
 public interface CityDao extends JpaRepository<City, Integer> {
 
     List<City> getCitiesByMovieMovieId(int movieId);
+
 }

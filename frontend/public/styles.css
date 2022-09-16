@@ -3953,7 +3953,7 @@ textarea.form-control-lg {
   }
 }
 .nav-link:hover, .nav-link:focus {
-  color: #be0761;
+  color: var(--bs-primary);
 }
 .nav-link.disabled {
   color: #6c757d;
@@ -3982,7 +3982,7 @@ textarea.form-control-lg {
 }
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
+  color: var(--bs-primary);
   background-color: #fff;
   border-color: #dee2e6 #dee2e6 #fff;
 }
@@ -11448,7 +11448,6 @@ header.masthead .bg-circle-4 {
   position: relative;
   display: grid;
   place-content: center;
-  
   /* background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
@@ -11530,4 +11529,33 @@ textarea::after{
   background-color: inherit;
   color: white;
   border: none;
+}
+
+.last-movie-p{
+    white-space: unset;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+    max-height: 200px;
+}
+
+.nav-movie-p{
+  color: black;
+}
+.nav-movie-p:hover{
+  color: var(--bs-primary);
+}
+
+.date-converter-ticket{
+  color: grey;
+}
+
+.date-converter-ticket:hover{
+  color: var(--bs-primary);
+}
+
+.saloonTime-btn:hover{
+  color: white;
+  background: var(--bs-primary);
+  border-color: var(--bs-primary);
 }
