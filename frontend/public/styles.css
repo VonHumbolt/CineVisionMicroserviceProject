@@ -11559,3 +11559,32 @@ textarea::after{
   background: var(--bs-primary);
   border-color: var(--bs-primary);
 }
+
+.ticket-page{
+  height: 100vh;
+}
+
+.ticket-page-bg-img{
+  position: relative;
+  display: grid;
+  place-content: center;
+}
+.ticket-page-bg-img::after{
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: pink;
+  background-image: url("https://tr.web.img4.acsta.net/pictures/22/08/22/16/29/5693673.jpg"); 
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  opacity: 0.8;
+  min-height: 100vh;
+  filter: blur(8px);
+}
+.ticket-page button:hover{
+  background-color: var(--bs-primary);
+  color: white;
+  border-color: var(--bs-primary);
+}

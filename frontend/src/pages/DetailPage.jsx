@@ -144,7 +144,8 @@ export default function DetailPage() {
                 </div>
                 <div className='container pb-4'>
                     {saloonTimes?.map(time => (
-                        <button className='saloonTime-btn btn btn-outline-dark mx-2 mt-3'>
+                        <button className='saloonTime-btn btn btn-outline-dark mx-2 mt-3'
+                            onClick={() => navigate("buyTicket")}>
                             <strong>{time.movieBeginTime} </strong>
                         </button>
                     ))}
