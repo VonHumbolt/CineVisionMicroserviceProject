@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import LoginModal from '../pages/LoginModal';
+import RegisterModal from '../pages/RegisterModal';
 import { MovieService } from '../services/movieService';
 
 export default function Navbar() {
@@ -47,13 +49,21 @@ export default function Navbar() {
                         <li class="nav-item"><a class="nav-link" href="#!"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             Filmler</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Kayıt Ol</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Giriş</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!"
+                            data-bs-toggle="modal" data-bs-target="#registerModal">Kayıt Ol</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!"
+                            data-bs-toggle="modal" data-bs-target="#loginModal">Giriş</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
 
+        {/* Login Modal */}
+        <LoginModal />
+        <RegisterModal />
+
+        {/* Movies OffCanvas */}
         <div class="offcanvas offcanvas offcanvas-top off-canvas-movie" tabindex="-1" id="offcanvasTop" 
             aria-labelledby="offcanvasTopLabel" style={{offcanvasHeight:"100%"}}>
        

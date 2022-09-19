@@ -25,6 +25,7 @@ public class MovieResponseDto {
     private String categoryName;
 
     private String movieImageUrl;
+    private String movieTrailerUrl;
 
     private String directorName;
 

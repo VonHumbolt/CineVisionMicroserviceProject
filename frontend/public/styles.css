@@ -11588,3 +11588,14 @@ textarea::after{
   color: white;
   border-color: var(--bs-primary);
 }
+
+.login-modal-btn:hover{
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.login-modal-header{
+  background: linear-gradient(90deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+  color: #fff;
+}

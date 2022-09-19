@@ -13,7 +13,7 @@ import java.util.List;
 public interface MovieDao extends JpaRepository<Movie, Integer> {
 
     @Query("Select new com.kaankaplan.movieService.entity.dto.MovieResponseDto(m.movieId, m.movieName, m.description, m.duration," +
-            "m.releaseDate, m.isDisplay, c.categoryId, c.categoryName, i.imageUrl, d.directorName" +
+            "m.releaseDate, m.isDisplay, c.categoryId, c.categoryName, i.imageUrl, m.movieTrailerUrl, d.directorName" +
             ") " +
             "From Movie m inner join m.category c on m.category.categoryId=c.categoryId " +
             "inner join m.director d on m.director.directorId=d.directorId " +
@@ -22,7 +22,7 @@ public interface MovieDao extends JpaRepository<Movie, Integer> {
 
     @Query("select new com.kaankaplan.movieService.entity.dto.MovieResponseDto(" +
             "m.movieId, m.movieName, m.description, m.duration, m.releaseDate, m.isDisplay," +
-            "c.categoryId, c.categoryName, i.imageUrl, d.directorName) from Movie m" +
+            "c.categoryId, c.categoryName, i.imageUrl, m.movieTrailerUrl, d.directorName) from Movie m" +
             " inner join m.image i on m.image.imageId=i.imageId" +
             " inner join m.director d on m.director.directorId=d.directorId" +
             " inner join m.category c on m.category.categoryId=c.categoryId" +
@@ -31,7 +31,7 @@ public interface MovieDao extends JpaRepository<Movie, Integer> {
 
     @Query("select new com.kaankaplan.movieService.entity.dto.MovieResponseDto(" +
             "m.movieId, m.movieName, m.description, m.duration, m.releaseDate, m.isDisplay," +
-            "c.categoryId, c.categoryName, i.imageUrl, d.directorName) from Movie m" +
+            "c.categoryId, c.categoryName, i.imageUrl, m.movieTrailerUrl, d.directorName) from Movie m" +
             " inner join m.image i on m.image.imageId=i.imageId" +
             " inner join m.director d on m.director.directorId=d.directorId" +
             " inner join m.category c on m.category.categoryId=c.categoryId" +

@@ -89,15 +89,26 @@ export default function DetailPage() {
                         <div class="row gy-1 justify-content-start align-items-end mt-5">
                         
                             <div className='col-sm-4'>
-                                <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"><strong>Bilet Al </strong></button>
+                                <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"
+                                    onClick={() => {
+                                        document.querySelector("#ticketBuy").scrollIntoView({
+                                            behavior: "smooth"
+                                        })
+                                    }}><strong>Bilet Al </strong></button>
                                 
                             </div>
                             <div className='col-sm-4'>
-                                <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"><strong>Yorum Yap</strong></button>
+                                <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"
+                                    onClick={() => {
+                                        document.querySelector("#commentSection").scrollIntoView({
+                                            behavior: "smooth"
+                                        })
+                                    }}><strong>Yorum Yap</strong></button>
 
                             </div>
                             <div className='col-sm-4'>
-                                <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"><strong>Fragman</strong></button>
+                                <button class="detail-page-btn btn btn-light btn-lg col-12" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#movieTrailerModal"><strong>Fragman</strong></button>
 
                             </div>
                         </div>
@@ -122,7 +133,7 @@ export default function DetailPage() {
         </section>
 
         {/* Ticket Buy Section */}
-        <section className='pt-1 pb-3'>
+        <section id="ticketBuy" className='pt-1 pb-3'>
             <div className='container bg-primary rounded'>
                 <div className='row p-5'>
                     <div className='col-sm-4 mt-2 text-end text-light'>
@@ -141,7 +152,7 @@ export default function DetailPage() {
 
         {/* Ticket Detail Section */}
         {selectedSaloon ? (
-            <section className='px-5 py-1 pb-5'>
+            <section id="ticketDetailSection" className='px-5 py-1 pb-5'>
                 <hr />
                 <div className='container py-2'>
                     <ul class="nav justify-content-center">
@@ -178,7 +189,7 @@ export default function DetailPage() {
 
 
         {/* Comment Modal */}
-        <section className='pt-3 pb-5 px-2'>
+        <section id="commentSection" className='pt-5 pb-5 px-2'>
             <div className='container'>
                 <div className='row gy-2 justify-content-start align-items-start'>
                     <div className='col-sm-12 col-md-6 text-start'>
@@ -239,6 +250,25 @@ export default function DetailPage() {
             </Swiper>
         </section>
 
+
+        {/* MovieTrailer Modal */}
+
+        <div class="modal fade" id="movieTrailerModal" tabindex="-1" aria-labelledby="movieTrailerLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="movieTrailerLabel">Fragman</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <iframe width="100%" height="500rem" frameborder="0" 
+                        src={movie.movieTrailerUrl + "?autoplay=1"}>
+                    </iframe>
+                </div>
+                
+                </div>
+            </div>
+        </div>
 
         {/* Saloon Modal */}
         <div class="modal fade" id="saloonModal" tabindex="-1" aria-labelledby="saloonModalLabel" aria-hidden="true" style={{height:"50%", overflow:'auto'}}>

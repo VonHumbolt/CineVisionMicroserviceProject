@@ -1,8 +1,11 @@
 import Cleave from 'cleave.js/react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function BuyTicketPage() {
+
+    const navigate = useNavigate()
 
     const [ticketItem, setTicketItem] = useState("ticketSection")
     const [adultTicketNumber, setAdultTicketNumber] = useState(0)
@@ -198,14 +201,14 @@ export default function BuyTicketPage() {
 
                                         <div className='col-sm-12 col-md-6 mb-3'>
                                             <div class="form-floating mb-3">
-                                                <Cleave class="form-control" id="floatingCardNumber"  required
+                                                <Cleave class="form-control" id="floatingCardNumber" placeholder='Kredi Kartı Numarası' required
                                                 options={{creditCard:true}} />
                                                 <label for="floatingCardNumber">Kredi Kartı Numarası</label>
                                             </div>
                                             <div className='row'>
                                                 <div className='col-sm-6'>
                                                     <div class="form-floating mb-3">
-                                                        <Cleave type="text" class="form-control" id="floatingCardLastDate" required
+                                                        <Cleave type="text" class="form-control" id="floatingCardLastDate" placeholder='Son Tarih' required
                                                         options={{date:true, datePattern: ['m','y']}} />
                                                         <label for="floatingCardLastDate">Son Tarih</label>
                                                     </div>
@@ -224,7 +227,8 @@ export default function BuyTicketPage() {
 
                                         <hr />
                                         <div className='text-end mt-1'>
-                                            <button type='submit' className='btn btn-dark col-3'>Ödeme</button>
+                                            <button type='submit' className='btn btn-dark col-3'
+                                                onClick={() => navigate("/paymentSuccess")}>Ödeme</button>
                                         </div>
                                     </form>
 
