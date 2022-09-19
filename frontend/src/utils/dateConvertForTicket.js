@@ -9,7 +9,7 @@ export default function dateConvertForTicket(date) {
     return (
         <div>
             {new Date(date).getDay() === new Date().getDay() ? (
-                <h4 className="nav-link active">Bugün</h4>
+                <h4 className="pt-2">Bugün</h4>
             ): <h5>{day}</h5>} 
             
             {new Date(date).getDay() !== new Date().getDay() ? (

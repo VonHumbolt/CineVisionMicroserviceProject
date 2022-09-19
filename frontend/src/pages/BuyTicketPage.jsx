@@ -1,10 +1,14 @@
+import Cleave from 'cleave.js/react'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function BuyTicketPage() {
 
     const [ticketItem, setTicketItem] = useState("ticketSection")
     const [adultTicketNumber, setAdultTicketNumber] = useState(0)
     const [studentTicketNumber, setStudentTicketNumber] = useState(0)
+
+    const movieState = useSelector(state => state.movie.payload)
 
   return (
     <div className='ticket-page'>
@@ -13,18 +17,16 @@ export default function BuyTicketPage() {
 
             <div className='ticket-page-bg-img  col-sm-12 col-md-4 text-light'>
                 <div className='mt-5 pt-5'>
-                    <h3 className='mt-2'> Movie Name </h3>
-                    <img className='img-thumbnail w-50 mx-auto mt-5' src={"https://tr.web.img4.acsta.net/pictures/22/08/22/16/29/5693673.jpg"} />
-                    <h5 className='pt-5'><i className="fa-solid fa-location-dot"></i>Saloon</h5>
-                    <h5 className='py-2'><i class="fa-solid fa-calendar-days"></i>Date</h5>
-                    <h5><i class="fa-regular fa-clock"></i>Time Hour</h5>
+                    <h3 className='mt-2'> {movieState.movieName} </h3>
+                    <img className='img-thumbnail w-50 mx-auto mt-5' src={movieState.imageUrl} />
+                    <h5 className='pt-5'><i className="fa-solid fa-location-dot"></i>{movieState.saloonName}</h5>
+                    <h5 className='py-2'><i class="fa-solid fa-calendar-days"></i>{movieState.movieDay}</h5>
+                    <h5><i class="fa-regular fa-clock"></i>{movieState.movieTime}</h5>
                 </div>
             </div>
             <div className='col-sm-12 col-md-8 pt-5'>
                 <div className='container pt-5'>
-                    {/* Ticket Type Section */}
                     
-
                     <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
@@ -32,6 +34,7 @@ export default function BuyTicketPage() {
                                         <div className='col-sm-6 text-start'>
                                             <h3>Biletini Seç</h3>
                                         </div>
+                                            {/* Ticket Type Section */}
                                          
                                             <div className='col-sm-6 mb-2 text-end'>
                                                 {ticketItem === "ticketSection" ?
@@ -55,7 +58,6 @@ export default function BuyTicketPage() {
                                         <section>
                                                 <div className='row '>
                                                     <div className='col-sm-6 text-start'>
-                                                        {/* <h3>Biletini Seç</h3> */}
                                                         <p>Film ve Seans seçiminden sonra bilet tipini seçmelisin.
                                                             Eğer öğrenciysen kimlik kartını yanında getirmeyi unutma.</p>                        
                                                     </div>
@@ -166,7 +168,7 @@ export default function BuyTicketPage() {
                                         </div>
                                         <div className='col-sm-6 mb-2 text-end'>
                                             {ticketItem === "paySection" ?
-                                                <h3>Toplam : ₺</h3>
+                                                <h3>Toplam : {(studentTicketNumber * 15.00 + adultTicketNumber * 25.00).toFixed(2)} ₺</h3>
                                             : null}
                                         </div>
                                       
@@ -191,34 +193,37 @@ export default function BuyTicketPage() {
                                                 <label for="floatingPhone">Cep Telefonu</label>
                                             </div>
                                             
-                                            <p className='text-start'> <input class="form-check-input me-3" type="checkbox" value="" aria-label="Checkbox for following text input" required/>Ön Bilgilendirme Koşulları'nı ve
-                                                Mesafeli Satış Sözleşmesi'ni okudum, onaylıyorum.
-                                            </p>
+                                           
                                         </div>
 
-                                        <div className='col-sm-12 col-md-6'>
+                                        <div className='col-sm-12 col-md-6 mb-3'>
                                             <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" id="floatingCardNumber" placeholder="Kredi Kartı Numarası" required/>
+                                                <Cleave class="form-control" id="floatingCardNumber"  required
+                                                options={{creditCard:true}} />
                                                 <label for="floatingCardNumber">Kredi Kartı Numarası</label>
                                             </div>
                                             <div className='row'>
                                                 <div className='col-sm-6'>
                                                     <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="floatingCardLastDate" placeholder="Son Kullanım Tarihi" required />
+                                                        <Cleave type="text" class="form-control" id="floatingCardLastDate" required
+                                                        options={{date:true, datePattern: ['m','y']}} />
                                                         <label for="floatingCardLastDate">Son Tarih</label>
                                                     </div>
                                                 </div>
                                                 <div className='col-sm-6'>
                                                     <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="floatingSecurityNumber" placeholder="Güvenlik Numarası" required/>
+                                                        <input type="text" class="form-control"  maxlength="3" size="3"  id="floatingSecurityNumber" placeholder="Güvenlik Numarası" required/>
                                                         <label for="floatingSecurityNumber">CCV</label>
                                                     </div>
                                                 </div>
+                                                <p className='text-start'> <input class="form-check-input me-3" type="checkbox" value="" aria-label="Checkbox for following text input" required/>Ön Bilgilendirme Koşulları'nı ve
+                                                Mesafeli Satış Sözleşmesi'ni okudum, onaylıyorum.
+                                            </p>
                                             </div>
                                         </div>
 
                                         <hr />
-                                        <div className='text-end'>
+                                        <div className='text-end mt-1'>
                                             <button type='submit' className='btn btn-dark col-3'>Ödeme</button>
                                         </div>
                                     </form>
@@ -235,7 +240,7 @@ export default function BuyTicketPage() {
 
 
         </div>
-    
+     
 
     </div>
   )

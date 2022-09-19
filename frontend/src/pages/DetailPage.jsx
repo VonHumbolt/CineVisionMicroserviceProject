@@ -10,10 +10,14 @@ import { MovieService } from '../services/movieService';
 import dateConvert from '../utils/dateConverter';
 import dateConvertForTicket from '../utils/dateConvertForTicket';
 import { SaloonTimeService } from '../services/saloonTimeService';
+import { useDispatch } from 'react-redux';
+import { addMovieToState, cleanState } from '../store/actions/movieActions';
 
 export default function DetailPage() {
     let {movieId} = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     let date = new Date();
 
     const movieService = new MovieService()
@@ -28,6 +32,7 @@ export default function DetailPage() {
     const [selectedCity, setSelectedCity] = useState({})
     const [selectedSaloon, setSelectedSaloon] = useState(null)
     const [saloonTimes, setSaloonTimes] = useState([])
+    const [selectedDay, setSelectedDay] = useState(dateConvert(date))
 
     useEffect(() => {
         
@@ -46,6 +51,22 @@ export default function DetailPage() {
         saloonTimeService.getMovieSaloonTimeSaloonAndMovieId(saloonId, movieId).then(result => {
             setSaloonTimes(result.data);
         })
+    }
+
+    function addState(movieTime) {
+        dispatch(cleanState());
+
+        let movieDto = {
+            id: movie.movieId,
+            movieName: movie.movieName,
+            imageUrl: movie.movieImageUrl,
+            saloonId: selectedSaloon.saloonId,
+            saloonName: selectedSaloon.saloonName,
+            movieDay: selectedDay,
+            movieTime: movieTime
+        }
+        dispatch(addMovieToState(movieDto));
+        navigate("buyTicket")
     }
 
 // style={{ backgroundImage: `url(${movie.movieImageUrl})`}}
@@ -128,7 +149,7 @@ export default function DetailPage() {
                             [0,1,2,3,4,5,6].map((i) => (
                                 <li class="nav-item">
                                     <a class="nav-link active date-converter-ticket" aria-current="page"
-                                         href="#!">
+                                         href="#!" onClick={() => setSelectedDay( dateConvert(new Date().setDate(date.getDate() + i)) )}>
                                         {dateConvertForTicket(new Date().setDate(date.getDate() + i))}
                                     </a>
                                 </li>
@@ -145,7 +166,7 @@ export default function DetailPage() {
                 <div className='container pb-4'>
                     {saloonTimes?.map(time => (
                         <button className='saloonTime-btn btn btn-outline-dark mx-2 mt-3'
-                            onClick={() => navigate("buyTicket")}>
+                            onClick={() => addState(time.movieBeginTime)}>
                             <strong>{time.movieBeginTime} </strong>
                         </button>
                     ))}
