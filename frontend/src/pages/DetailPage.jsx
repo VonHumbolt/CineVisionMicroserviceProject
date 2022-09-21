@@ -68,20 +68,18 @@ export default function DetailPage() {
         dispatch(addMovieToState(movieDto));
         navigate("buyTicket")
     }
-
-// style={{ backgroundImage: `url(${movie.movieImageUrl})`}}
   return (
     <div>
-        <section className='detail-bg pt-5' >
+        <section className='detail-bg pt-5'>
             <div className=' container mt-5'>
                 <div className='row gx-0 pt-2 justify-content-center align-items-start'>
                     <div className='col-sm-12 col-md-6 text-center mb-4' >
-                        <img className='img-thumbnail w-50' src={movie.movieImageUrl} />
+                        <img className='img-thumbnail w-50' src={movie?.movieImageUrl} />
                     </div>
                     <div className='col-sm-12 col-md-6 text-start text-light'>
-                        <h3>{movie.movieName}</h3>
+                        <h3>{movie?.movieName}</h3>
                         <hr/>
-                        <h5>Yönetmen: {movie.directorName}</h5>
+                        <h5>Yönetmen: {movie?.directorName}</h5>
                         <h5>Oyuncular: {actors?.map(actor => (
                             actor.actorName + " ,"
                         ))}
@@ -117,9 +115,28 @@ export default function DetailPage() {
             </div>
         </section>
 
+        {/* for css ::after property */}
+        <style dangerouslySetInnerHTML={{
+            __html: [
+                '.detail-bg:after {',
+                '  content: "Hello";',
+                '  position: absolute;',                
+                'z-index: -1;',
+                'inset: 0;',
+                `background-image: url(${movie?.movieImageUrl});`, 
+                'background-repeat: no-repeat;',
+                'background-size: cover;',
+                'background-position: top center;',
+                'opacity: 0.8;',
+                '-webkit-filter: blur(8px) saturate(1);',
+                '}'
+                ].join('\n')
+            }}>
+        </style>
+
         <section className='p-5'>
             <div className='container'>
-                <div className='row justify-content-between'>
+                <div className='row justify-content-between ms-0 ms-md-5 ps-0 ps-md-5'>
                     <div className='col-sm-4 text-start'>
                         <p> <strong> Vizyon Tarihi: </strong> {dateConvert( movie.releaseDate) }</p>
                         <p> <strong>Süre: </strong>{movie.duration} Dakika</p>
@@ -136,7 +153,7 @@ export default function DetailPage() {
         <section id="ticketBuy" className='pt-1 pb-3'>
             <div className='container bg-primary rounded'>
                 <div className='row p-5'>
-                    <div className='col-sm-4 mt-2 text-end text-light'>
+                    <div className='col-sm-4 mt-2 text-sm-start text-md-end text-light'>
                         <h2>Bilet Al</h2>
                     </div>
                     <div className='col-sm-8 ps-3 mt-2'>

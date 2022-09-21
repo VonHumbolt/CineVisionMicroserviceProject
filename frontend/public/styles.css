@@ -11454,7 +11454,7 @@ header.masthead .bg-circle-4 {
   opacity: 0.8; */
   min-height: 600px;
 }
-.detail-bg::after{
+/* .detail-bg::after{
   content: '';
   position: absolute;
   z-index: -1;
@@ -11466,7 +11466,7 @@ header.masthead .bg-circle-4 {
   background-position: top center;
   opacity: 0.8;
   filter: blur(8px);
-}
+} */
 
 .detail-page-btn:hover {
   border-color: #000;
@@ -11569,7 +11569,7 @@ textarea::after{
   display: grid;
   place-content: center;
 }
-.ticket-page-bg-img::after{
+/* .ticket-page-bg-img::after{
   content: '';
   position: absolute;
   z-index: -1;
@@ -11581,8 +11581,8 @@ textarea::after{
   background-position: top center;
   opacity: 0.8;
   min-height: 100vh;
-  filter: blur(8px);
-}
+  -webkit-filter: blur(10px) saturate(2);
+} */
 .ticket-page button:hover{
   background-color: var(--bs-primary);
   color: white;
@@ -11598,4 +11598,8 @@ textarea::after{
 .login-modal-header{
   background: linear-gradient(90deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
   color: #fff;
+}
+
+.table td:hover{
+  background-color: var(--bs-secondary);
 }

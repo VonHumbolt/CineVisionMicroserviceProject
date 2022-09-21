@@ -20,13 +20,33 @@ export default function BuyTicketPage() {
 
             <div className='ticket-page-bg-img  col-sm-12 col-md-4 text-light'>
                 <div className='mt-5 pt-5'>
-                    <h3 className='mt-2'> {movieState.movieName} </h3>
-                    <img className='img-thumbnail w-50 mx-auto mt-5' src={movieState.imageUrl} />
-                    <h5 className='pt-5'><i className="fa-solid fa-location-dot"></i>{movieState.saloonName}</h5>
-                    <h5 className='py-2'><i class="fa-solid fa-calendar-days"></i>{movieState.movieDay}</h5>
-                    <h5><i class="fa-regular fa-clock"></i>{movieState.movieTime}</h5>
+                    <h3 className='mt-2'> {movieState?.movieName} </h3>
+                    <img className='img-thumbnail w-50 mx-auto mt-5' src={movieState?.imageUrl} />
+                    <h5 className='pt-5'><i className="fa-solid fa-location-dot"></i>{movieState?.saloonName}</h5>
+                    <h5 className='py-2'><i class="fa-solid fa-calendar-days"></i>{movieState?.movieDay}</h5>
+                    <h5><i class="fa-regular fa-clock"></i>{movieState?.movieTime}</h5>
                 </div>
+               
             </div>
+            {/* for css ::after property */}
+            <style dangerouslySetInnerHTML={{
+                    __html: [
+                        '.ticket-page-bg-img:after {',
+                        '  content: " ";',
+                        '  position: absolute;',                
+                        'z-index: -1;',
+                        'inset: 0;',
+                        `background-image: url(${movieState?.imageUrl});`, 
+                        'background-repeat: no-repeat;',
+                        'background-size: cover;',
+                        'background-position: top center;',
+                        'opacity: 0.8;',
+                        'min-height: 100vh;',
+                        '-webkit-filter: blur(8px) saturate(1);',
+                        '}'
+                        ].join('\n')
+                }}>
+                </style>
             <div className='col-sm-12 col-md-8 pt-5'>
                 <div className='container pt-5'>
                     
@@ -137,7 +157,7 @@ export default function BuyTicketPage() {
                             <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                                 <div className='row pt-3 pb-1 px-4 align-items-center'>
                                         <div className='col-sm-6 text-start'>
-                                            <h3>Koltuk Seç</h3>
+                                            <h3>Koltuk Seç </h3>
                                         </div>
                                         <div className='col-sm-6 mb-2 text-end'>
                                             {ticketItem === "placeSection" ?
@@ -157,7 +177,85 @@ export default function BuyTicketPage() {
                             </h2>
                                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
-                                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">F</th>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td className='px-0' onClick={() => {
+                                                        
+                                                    }}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td className='px-0'> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                </tr>
+                                                <tr>
+                                                <th >E</th>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>D</th>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>C</th>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">B</th>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">A</th>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            <p className='pt-2'>Perde</p>
+                                            <hr style={{height:"4px", color:"black"}}/>
                                     </div>
                                 </div>
                         </div>
