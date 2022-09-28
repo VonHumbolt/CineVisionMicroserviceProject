@@ -12,6 +12,7 @@
   <modules>
     <module>movieService</module>
     <module>userService</module>
+    <module>eureka-server</module>
   </modules>
 
   <name>CineVisionMicroservice</name>
@@ -22,8 +23,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <spring.boot.maven.plugin.version>2.7.3</spring.boot.maven.plugin.version>
-    <spring.boot.dependencies.version>2.7.3</spring.boot.dependencies.version>
+    <spring.boot.maven.plugin.version>2.7.0</spring.boot.maven.plugin.version>
+    <spring.boot.dependencies.version>2.7.0</spring.boot.dependencies.version>
+    <spring.cloud.version>2021.0.3</spring.cloud.version>
   </properties>
 
   <dependencyManagement>
@@ -34,6 +36,13 @@
         <version>${spring.boot.dependencies.version}</version>
         <scope>import</scope>
         <type>pom</type> <!-- Bunun sayesinde bu dependency'leri diğer modullerde kullanabileceğiz -->
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring.cloud.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
