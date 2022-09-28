@@ -6,4 +6,6 @@ import java.util.List;
 public interface ActorService {
 
     List<Actor> getActorsByMovieId(int movieId);
+
+    List<Actor> getall();
 }

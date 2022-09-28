@@ -4,6 +4,7 @@ import com.kaankaplan.movieService.business.abstracts.CityService;
 import com.kaankaplan.movieService.dao.CityDao;
 import com.kaankaplan.movieService.entity.City;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,5 +18,10 @@ public class CityServiceImpl implements CityService {
     @Override
     public List<City> getCitiesByMovieId(int movieId) {
         return cityDao.getCitiesByMovieMovieId(movieId);
+    }
+
+    @Override
+    public List<City> getall() {
+        return cityDao.findAll(Sort.by(Sort.Direction.ASC, "cityName"));
     }
 }

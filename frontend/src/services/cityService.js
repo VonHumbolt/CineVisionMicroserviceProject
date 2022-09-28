@@ -8,4 +8,8 @@ export class CityService {
         return axios.get(this.apiUrl + "getCitiesByMovieId/" + movieId);
     }
 
+    getall() {
+        return axios.get(this.apiUrl + "getall");
+    }
+
 }

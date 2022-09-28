@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Router, Routes } from 'react-router-dom'
+import AddMoviePage from '../pages/admin/AddMoviePage'
 import BuyTicketPage from '../pages/BuyTicketPage'
 import DetailPage from '../pages/DetailPage'
 import MainPage from '../pages/MainPage'
@@ -13,6 +14,7 @@ export default function Dashboard() {
         <Route path={"/movie/:movieId"} element={<DetailPage/>} />
         <Route path={"movie/:movieId/buyTicket"}  element={<BuyTicketPage/>} />       
         <Route path={"/paymentSuccess"}  element={<PaymnetSuccessPage/>} />       
+        <Route path={"/addMovie"}  element={<AddMoviePage/>} />       
 
       </Routes>
 

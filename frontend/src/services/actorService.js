@@ -8,4 +8,7 @@ export class ActorService {
         return axios.get(this.apiUrl + "getActorsByMovieId/" + movieId);
     }
 
+    getall() {
+        return axios.get(this.apiUrl + "getall");
+    }
 }

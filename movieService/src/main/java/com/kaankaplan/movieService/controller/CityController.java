@@ -17,6 +17,11 @@ public class CityController {
 
     @GetMapping("getCitiesByMovieId/{movieId}")
     public List<City> getCitiesByMovieId(@PathVariable int movieId) {
-       return cityService.getCitiesByMovieId(movieId);
+        return cityService.getCitiesByMovieId(movieId);
+    }
+
+    @GetMapping("getall")
+    public List<City> getall() {
+        return cityService.getall();
     }
 }
