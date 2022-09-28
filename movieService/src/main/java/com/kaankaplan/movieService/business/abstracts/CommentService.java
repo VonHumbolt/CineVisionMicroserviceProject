@@ -1,6 +1,7 @@
 package com.kaankaplan.movieService.business.abstracts;
 
 import com.kaankaplan.movieService.entity.Comment;
+import com.kaankaplan.movieService.entity.dto.CommentRequestDto;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface CommentService {
 
     void deleteComment(int id);
 
-    void addComment(Comment comment, String userId);
+    void addComment(CommentRequestDto commentRequestDto);
 }

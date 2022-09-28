@@ -1,5 +1,6 @@
 package com.kaankaplan.userService.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 

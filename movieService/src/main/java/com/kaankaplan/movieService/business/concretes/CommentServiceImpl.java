@@ -4,7 +4,8 @@ import com.kaankaplan.movieService.business.abstracts.CommentService;
 import com.kaankaplan.movieService.business.abstracts.MovieService;
 import com.kaankaplan.movieService.dao.CommentDao;
 import com.kaankaplan.movieService.entity.Comment;
-import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
+import com.kaankaplan.movieService.entity.Movie;
+import com.kaankaplan.movieService.entity.dto.CommentRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,8 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentDao commentDao;
-    private final WebClient webClient;
+    private final MovieService movieService;
+    private final WebClient.Builder webClientBuilder;
 
     @Override
     public List<Comment> getCommentsByMovieId(int movieId, int pageNo, int pageSize) {
@@ -32,15 +34,25 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void addComment(Comment comment, String userId) {
+    public void addComment(CommentRequestDto commentRequestDto) {
 
-        Boolean result = webClient.get()
-                .uri("http:localhost:8081/api/v1/customers/isExist/" + userId)
+        Boolean result = webClientBuilder.build().get()
+                .uri("http://USERSERVICE/api/v1/customers/isExist/" + commentRequestDto.getUserId())
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
 
+        if (result) {
+            Movie movie = movieService.getMovieById(commentRequestDto.getMovieId());
 
-        commentDao.save(comment);
+            Comment comment = Comment.builder()
+                    .commentBy(commentRequestDto.getCommentBy())
+                    .commentText(commentRequestDto.getCommentText())
+                    .movie(movie)
+                    .build();
+
+            commentDao.save(comment);
+        }
+
     }
 }

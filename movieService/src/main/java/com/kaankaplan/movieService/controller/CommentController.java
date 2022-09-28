@@ -2,6 +2,7 @@ package com.kaankaplan.movieService.controller;
 
 import com.kaankaplan.movieService.business.abstracts.CommentService;
 import com.kaankaplan.movieService.entity.Comment;
+import com.kaankaplan.movieService.entity.dto.CommentRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,9 @@ public class CommentController {
         return commentService.getCommentsByMovieId(movieId, pageNo, pageSize);
     }
 
-    @PostMapping("add/{userId}")
-    public void addComment(@RequestBody Comment comment, @PathVariable String userId) {
-        commentService.addComment(comment, userId);
+    @PostMapping("add")
+    public void addComment(@RequestBody CommentRequestDto comment) {
+        commentService.addComment(comment);
     }
 
     @PostMapping("delete/{commentId}")

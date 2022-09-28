@@ -38,4 +38,5 @@ public interface MovieDao extends JpaRepository<Movie, Integer> {
             " where m.movieId=:movieId")
     MovieResponseDto getMovieById(@Param("movieId") int movieId);
 
+    Movie getMovieByMovieId(int movieId);
 }

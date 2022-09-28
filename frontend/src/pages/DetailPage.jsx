@@ -12,6 +12,8 @@ import dateConvertForTicket from '../utils/dateConvertForTicket';
 import { SaloonTimeService } from '../services/saloonTimeService';
 import { useDispatch } from 'react-redux';
 import { addMovieToState, cleanState } from '../store/actions/movieActions';
+import { CommentService } from '../services/commentService';
+
 
 export default function DetailPage() {
     let {movieId} = useParams();
@@ -24,6 +26,7 @@ export default function DetailPage() {
     const cityService = new CityService()
     const actorService = new ActorService()
     const saloonTimeService = new SaloonTimeService();
+    const commentService = new CommentService();
 
     const [movie, setMovie] = useState({})
     const [actors, setActors] = useState([])
@@ -33,6 +36,7 @@ export default function DetailPage() {
     const [selectedSaloon, setSelectedSaloon] = useState(null)
     const [saloonTimes, setSaloonTimes] = useState([])
     const [selectedDay, setSelectedDay] = useState(dateConvert(date))
+    const [comments, setComments] = useState([])
 
     useEffect(() => {
         
@@ -44,6 +48,7 @@ export default function DetailPage() {
             const films = result.data.filter(m => m.movieId != movieId);
             setOtherMovies(films);
         })
+        getComments(1, 5);
 
     }, [])
     
@@ -51,6 +56,10 @@ export default function DetailPage() {
         saloonTimeService.getMovieSaloonTimeSaloonAndMovieId(saloonId, movieId).then(result => {
             setSaloonTimes(result.data);
         })
+    }
+
+    function getComments(pageNo, pageSize=5) {
+        commentService.getCommentsByMovieId(movieId, pageNo, pageSize).then(result => setComments(result.data))
     }
 
     function addState(movieTime) {
@@ -212,8 +221,23 @@ export default function DetailPage() {
                     <div className='col-sm-12 col-md-6 text-start'>
                        <h3>Yorumlar</h3>
                        {/* Yorumları listele */}
-                       <p className='lead mt-4'>İlk Yorumu sen yaz</p>
-                       <hr />
+                       {comments.length == 0 ? (
+                           <p className='lead mt-4'>İlk Yorumu sen yaz</p>
+                       ): null}
+
+                        {comments.map(comment => (
+                            <div>
+                                <p className='lead mt-4'>{comment.commentText}</p>
+                                <p className='small mt-0'>{comment.commentBy}</p>
+                            </div>
+                        ))}
+                        
+                        <hr />
+
+                        {comments.length > 0 ? (
+                           <a href='#!' className='text-center lead mt-4'>Daha fazla göster</a>
+                        ): null}
+
                     </div>
                     <div className='col-sm-12 col-md-6 text-start'>
                         <h3>Yorum Yap</h3>

@@ -2,6 +2,7 @@ package com.kaankaplan.movieService.business.concretes;
 
 import com.kaankaplan.movieService.business.abstracts.MovieService;
 import com.kaankaplan.movieService.dao.MovieDao;
+import com.kaankaplan.movieService.entity.Movie;
 import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieResponseDto getMovieByMovieId(int movieId) {
         return movieDao.getMovieById(movieId);
+    }
+
+    @Override
+    public Movie getMovieById(int movieId) {
+        return movieDao.getMovieByMovieId(movieId);
     }
 }
