@@ -1,7 +1,9 @@
 import Cleave from 'cleave.js/react'
+import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import KaanKaplanTextInput from '../utils/customFormItems/KaanKaplanTextInput'
 
 export default function BuyTicketPage() {
 
@@ -278,20 +280,29 @@ export default function BuyTicketPage() {
                             
                             <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                             <div class="accordion-body">
-                                
-                                    <form className='row justify-content-center align-items-start'>
+                                <Formik
+                                    initialValues={{}}
+                                    onSubmit={(values) => {
+                                        values.movieName = movieState?.movieName;
+                                        values.saloonName= movieState?.saloonName;
+                                        values.movieDay= movieState?.movieDay;
+                                        values.movieStartTime= movieState?.movieTime;
+                                        console.log(values);
+                                        // navigate("/paymentSuccess")
+                                    }}>
+                                    <Form className='row justify-content-center align-items-start'>
                                         <div className='col-sm-12 col-md-6'>
                                             <div class="imput-group form-floating has-validation mb-3">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="İsim - Soyisim" required/>
-                                                <label for="floatingInput">İsim - Soyisim</label>
+                                                <KaanKaplanTextInput name="fullName" type="text" class="form-control" id="fullName" placeholder="İsim - Soyisim" required/>
+                                                <label for="fullName">İsim - Soyisim</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input type="email" class="form-control" id="floatingEmail" placeholder="Email" required/>
-                                                <label for="floatingEmail">Email</label>
+                                                <KaanKaplanTextInput name="email" type="email" class="form-control" id="email" placeholder="Email" required/>
+                                                <label for="email">Email</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input type="phone" class="form-control" id="floatingPhone" placeholder="Cep Telefonu" required/>
-                                                <label for="floatingPhone">Cep Telefonu</label>
+                                                <KaanKaplanTextInput name="phone" type="tel" pattern="[0]{1} [0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}" class="form-control" id="phone" placeholder="0 5** *** ** **" required/>
+                                                <label for="phone">Cep Telefonu</label>
                                             </div>
                                             
                                            
@@ -325,10 +336,10 @@ export default function BuyTicketPage() {
 
                                         <hr />
                                         <div className='text-end mt-1'>
-                                            <button type='submit' className='btn btn-dark col-3'
-                                                onClick={() => navigate("/paymentSuccess")}>Ödeme</button>
+                                            <button type='submit' className='btn btn-dark col-3'>Ödeme</button>
                                         </div>
-                                    </form>
+                                    </Form>
+                                </Formik>
 
                             </div>
                             </div>

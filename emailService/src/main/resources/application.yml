@@ -1,0 +1,15 @@
+server:
+  port: 8083
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: email
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.support.serializer.JsonDeserializer
+    topic:
+      name: email_topics
+
+  application:
+    name: emailService
