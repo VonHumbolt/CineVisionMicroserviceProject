@@ -13,6 +13,7 @@
     <module>movieService</module>
     <module>userService</module>
     <module>eureka-server</module>
+      <module>emailService</module>
   </modules>
 
   <name>CineVisionMicroservice</name>
