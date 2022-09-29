@@ -1,4 +1,4 @@
-package com.kaankaplan.movieService.entity.dto;
+package com.kaankaplan.cineVision.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +14,11 @@ public class EmailMessageKafkaDto {
     private String sender;
     private String recipient;
     private String subtitle;
-    private String messageBody;
+    private String movieName;
+    private String saloonName;
+    private String movieDay;
+    private String movieStartTime;
+    private String fullName;
+
+
 }

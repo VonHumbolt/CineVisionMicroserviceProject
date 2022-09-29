@@ -3,11 +3,14 @@ import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { PaymentService } from '../services/paymentService'
 import KaanKaplanTextInput from '../utils/customFormItems/KaanKaplanTextInput'
 
 export default function BuyTicketPage() {
 
     const navigate = useNavigate()
+
+    const paymentService = new PaymentService();
 
     const [ticketItem, setTicketItem] = useState("ticketSection")
     const [adultTicketNumber, setAdultTicketNumber] = useState(0)
@@ -287,8 +290,10 @@ export default function BuyTicketPage() {
                                         values.saloonName= movieState?.saloonName;
                                         values.movieDay= movieState?.movieDay;
                                         values.movieStartTime= movieState?.movieTime;
-                                        console.log(values);
-                                        // navigate("/paymentSuccess")
+
+                                        paymentService.sendTicketDetail(values).then(result => {
+                                            navigate("/paymentSuccess")
+                                        })
                                     }}>
                                     <Form className='row justify-content-center align-items-start'>
                                         <div className='col-sm-12 col-md-6'>

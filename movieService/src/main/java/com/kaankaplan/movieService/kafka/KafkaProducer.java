@@ -1,6 +1,6 @@
 package com.kaankaplan.movieService.kafka;
 
-import com.kaankaplan.movieService.entity.dto.EmailMessageKafkaDto;
+import com.kaankaplan.cineVision.dto.EmailMessageKafkaDto;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaProducer {
 
-    private NewTopic newTopic;
-    private KafkaTemplate<String, EmailMessageKafkaDto> kafkaTemplate;
+    private final NewTopic newTopic;
+    private final KafkaTemplate<String, EmailMessageKafkaDto> kafkaTemplate;
 
     @Autowired
     public KafkaProducer(NewTopic newTopic, KafkaTemplate<String, EmailMessageKafkaDto> kafkaTemplate) {
