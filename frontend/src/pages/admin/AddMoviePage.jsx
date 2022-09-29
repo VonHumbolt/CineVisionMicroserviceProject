@@ -43,6 +43,8 @@ export default function AddMoviePage() {
 
    
     })
+
+
   return (
     <div>
         <div className='mt-5 p-5 container' style={{height: "100vh"}}>
@@ -57,7 +59,17 @@ export default function AddMoviePage() {
                 initialValues={initValues}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
-                    movieService.addMovie(values).then(result => navigate("/addMovie/" + result.data.movieId))
+                    if(values.directorId === undefined){
+                        let director={
+                            directorName: values.directorName
+                        }
+                        directorService.add(director).then(result => {
+                            values.directorId = result.data.directorId
+                            movieService.addMovie(values).then(result => navigate("/addMovie/" + result.data.movieId));
+                        })
+                    } else {
+                        movieService.addMovie(values).then(result => navigate("/addMovie/" + result.data.movieId));
+                    }
                 }}>
 
                 <Form>
@@ -105,6 +117,12 @@ export default function AddMoviePage() {
                     />
                     
                     <label for="directorId">Yönetmen</label>
+                </div>
+
+                <p>Yönetmen yukarıdaki listede bulunmuyorsa lütfen yazın.</p>
+                <div class="form-floating mb-3">
+                    <KaanKaplanTextInput name='directorName' type="text" class="form-control" id="directorName" placeholder="Yönetmen İsmi" />
+                    <label for="directorName">Yönetmen İsmi</label>
                 </div>
 
                 <div class="form-check mb-3 text-start">

@@ -6,4 +6,8 @@ export class DirectorService{
     getall() {
         return axios.get(this.apiUrl + "getall")
     }
+
+    add(director) {
+        return axios.post(this.apiUrl + "add", director);
+    }
 }

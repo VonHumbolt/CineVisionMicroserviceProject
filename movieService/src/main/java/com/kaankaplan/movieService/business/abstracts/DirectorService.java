@@ -9,4 +9,6 @@ public interface DirectorService {
     List<Director> getall();
 
     Director getDirectorById(int directorId);
+
+    Director add(Director director);
 }

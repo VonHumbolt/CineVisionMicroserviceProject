@@ -3,10 +3,7 @@ package com.kaankaplan.movieService.controller;
 import com.kaankaplan.movieService.business.abstracts.DirectorService;
 import com.kaankaplan.movieService.entity.Director;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +19,10 @@ public class DirectorController {
     @GetMapping("getall")
     public List<Director> getall() {
        return directorService.getall();
+    }
+
+    @PostMapping("add")
+    public Director add(@RequestBody Director director) {
+        return directorService.add(director);
     }
 }
