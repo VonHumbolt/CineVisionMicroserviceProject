@@ -7,6 +7,7 @@ import { CityService } from '../../services/cityService';
 import KaanKaplanSelect from '../../utils/customFormItems/KaanKaplanSelect'
 import KaanKaplanTextInput from '../../utils/customFormItems/KaanKaplanTextInput'
 import * as yup from "yup";
+import { MovieImageService } from '../../services/movieImageService';
 
 export default function AddActorsAndCityToMovie() {
 
@@ -15,6 +16,7 @@ export default function AddActorsAndCityToMovie() {
 
     const cityService = new CityService();
     const actorService = new ActorService();
+    const movieImageService = new MovieImageService();
 
     const [cities, setCities] = useState([])
     const [actors, setActors] = useState([])
@@ -29,7 +31,15 @@ export default function AddActorsAndCityToMovie() {
             });
             setCities(arr)
         })
-        actorService.getall().then(result => setActors(result.data))
+        actorService.getall().then(result => {
+            let arr = [];
+            result.data.forEach(element => {
+                if(!arr.includes(element?.actorName)){
+                    arr.push(element?.actorName)
+                }
+            });
+            setActors(arr)
+        })
       }, [])
 
     const initValues = {
@@ -57,8 +67,14 @@ export default function AddActorsAndCityToMovie() {
                 onSubmit={(values) => {
                     let actorNameList;
 
-                    if(values.actorName.trim() !== "") {
-                        actorNameList = [...values.actors, ...values.actorName.split(", ")] 
+                    if(!values.actorname && values.actorName.trim() != "") {
+                        if(values.actors !== undefined){
+
+                            actorNameList = [...values.actors, ...values.actorName.split(", ")] 
+                        }else {
+
+                            actorNameList = [...values.actorName.split(", ")] 
+                        }
                     } else {
                         actorNameList = [...values.actors] 
                     }
@@ -72,18 +88,19 @@ export default function AddActorsAndCityToMovie() {
                     }
                     
                     actorService.addActor(actorDto);
+                    movieImageService.addMovieImage(values.imageUrl, movieId);
                     cityService.addCity(cityDto).then(result => navigate("/addMovie"));
                 }}>
 
                 <Form>
-                    <div class="form-floating mb-3">
+                    <div class="mb-3">
                         <KaanKaplanSelect
                             class="form-select form-select-lg mb-3"
                             name="actors"
                             multiple
                             size={3}
                             options={actors.map(actor => (
-                                {key: actor?.actorName, text:actor?.actorName, value: actor?.actorName}
+                                {key: actor, text:actor, value: actor}
                             ))}
                         />
                     </div>
@@ -91,6 +108,11 @@ export default function AddActorsAndCityToMovie() {
                     <div class="form-floating mb-3">
                         <KaanKaplanTextInput  type="text" name='actorName' class="form-control" id="floatingInput" placeholder="Aktörün İsmi" />
                         <label for="floatingInput">Aktörün İsmi</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <KaanKaplanTextInput name='imageUrl' type="text" class="form-control" id="imageUrl" placeholder="Afiş Resmi Url" />
+                        <label for="imageUrl">Afiş Resmi Url</label>
                     </div>
 
                      <div class="mb-3">

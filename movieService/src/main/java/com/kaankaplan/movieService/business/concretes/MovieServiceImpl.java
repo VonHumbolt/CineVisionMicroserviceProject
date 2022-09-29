@@ -21,7 +21,6 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieDao movieDao;
-    private final MovieImageService movieImageService;
     private final CategoryService categoryService;
     private final DirectorService directorService;
 
@@ -48,7 +47,6 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie addMovie(MovieRequestDto movieRequestDto) {
 
-        MovieImage movieImage = movieImageService.addMovieImage(movieRequestDto.getImageUrl());
         Category category = categoryService.getCategoryById(movieRequestDto.getCategoryId());
         Director director = directorService.getDirectorById(movieRequestDto.getDirectorId());
 
@@ -58,9 +56,9 @@ public class MovieServiceImpl implements MovieService {
                 .duration(movieRequestDto.getDuration())
                 .releaseDate(movieRequestDto.getReleaseDate())
                 .movieTrailerUrl(movieRequestDto.getTrailerUrl())
-                .image(movieImage)
                 .category(category)
                 .director(director)
+                .isDisplay(movieRequestDto.isInVision())
                 .build();
 
         return movieDao.save(movie);

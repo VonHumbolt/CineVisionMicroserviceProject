@@ -19,7 +19,7 @@ public class MovieRequestDto {
     private int duration;
     private Date releaseDate;
     private String trailerUrl;
-    private String imageUrl;
+    private boolean isInVision;
     private int categoryId;
     private int directorId;
     private List<Integer> actors;

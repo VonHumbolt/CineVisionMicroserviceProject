@@ -5,5 +5,5 @@ import com.kaankaplan.movieService.entity.MovieImage;
 
 public interface MovieImageService {
 
-    MovieImage addMovieImage(String imageUrl);
+    MovieImage addMovieImage(String imageUrl, int movieId);
 }

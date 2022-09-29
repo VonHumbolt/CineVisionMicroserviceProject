@@ -25,7 +25,7 @@ public class Movie {
     private String description;
     private int duration;
     private Date releaseDate;
-    private boolean isDisplay = false;
+    private boolean isDisplay;
     private String movieTrailerUrl;
 
     @ManyToOne

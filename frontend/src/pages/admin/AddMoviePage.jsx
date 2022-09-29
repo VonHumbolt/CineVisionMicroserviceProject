@@ -11,6 +11,7 @@ import KaanKaplanTextInput from '../../utils/customFormItems/KaanKaplanTextInput
 import KaanKaplanTextArea from '../../utils/customFormItems/KaanKaplanTextArea';
 import { MovieService } from '../../services/movieService';
 import { useNavigate } from 'react-router-dom';
+import KaanKaplanCheckBox from '../../utils/customFormItems/KaanKaplanCheckBox';
 
 export default function AddMoviePage() {
 
@@ -56,7 +57,7 @@ export default function AddMoviePage() {
                 initialValues={initValues}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
-                    movieService.addMovie(values).then(result => navigate("addMovie/" + result.data.movieId))
+                    movieService.addMovie(values).then(result => navigate("/addMovie/" + result.data.movieId))
                 }}>
 
                 <Form>
@@ -75,11 +76,6 @@ export default function AddMoviePage() {
                 <div class="form-floating mb-3">
                     <KaanKaplanTextInput name='releaseDate' type="date" class="form-control" id="releaseDate" placeholder="Vizyon Tarihi" />
                     <label for="releaseDate">Vizyon Tarihi</label>
-                </div>
-            
-                <div class="form-floating mb-3">
-                    <KaanKaplanTextInput name='imageUrl' type="text" class="form-control" id="imageUrl" placeholder="Afiş Resmi Url" />
-                    <label for="imageUrl">Afiş Resmi Url</label>
                 </div>
                 
                 <div class="form-floating mb-3">
@@ -110,20 +106,14 @@ export default function AddMoviePage() {
                     
                     <label for="directorId">Yönetmen</label>
                 </div>
-              
-                {/* <div class="mb-3">
-                    <KaanKaplanSelect 
-                        class="form-select form-select-lg mb-3"
-                        name="cities"
-                        multiple
-                        size={3}
-                        options= {cities.map(city => (
-                            {key: city?.cityId, text:city?.cityName, value: city?.cityName}
-                        ))}
-                        placeholder="Şehir"
-                    />
-                </div> */}
 
+                <div class="form-check mb-3 text-start">
+                    <KaanKaplanCheckBox name="isInVision" class="form-check-input" type="checkbox" id="isInVision" />
+                    <label class="form-check-label" for="isInVision">
+                        Film Vizyonda Mı?
+                    </label>
+                </div>
+              
 {/* Daha sonra file ile ekle */}
                 {/* <div class="input-group mb-3">
                     <input type="file" class="form-control" id="image" />
