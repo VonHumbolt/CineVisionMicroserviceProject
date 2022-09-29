@@ -11,4 +11,8 @@ export class ActorService {
     getall() {
         return axios.get(this.apiUrl + "getall");
     }
+    
+    addActor(actorDto) {
+        return axios.post(this.apiUrl + "add", actorDto);
+    }
 }

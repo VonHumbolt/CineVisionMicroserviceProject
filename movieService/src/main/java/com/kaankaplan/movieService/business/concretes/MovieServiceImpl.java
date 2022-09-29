@@ -1,8 +1,15 @@
 package com.kaankaplan.movieService.business.concretes;
 
+import com.kaankaplan.movieService.business.abstracts.CategoryService;
+import com.kaankaplan.movieService.business.abstracts.DirectorService;
+import com.kaankaplan.movieService.business.abstracts.MovieImageService;
 import com.kaankaplan.movieService.business.abstracts.MovieService;
 import com.kaankaplan.movieService.dao.MovieDao;
+import com.kaankaplan.movieService.entity.Category;
+import com.kaankaplan.movieService.entity.Director;
 import com.kaankaplan.movieService.entity.Movie;
+import com.kaankaplan.movieService.entity.MovieImage;
+import com.kaankaplan.movieService.entity.dto.MovieRequestDto;
 import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +21,9 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieDao movieDao;
+    private final MovieImageService movieImageService;
+    private final CategoryService categoryService;
+    private final DirectorService directorService;
 
     @Override
     public List<MovieResponseDto> getAllDisplayingMoviesInVision() {
@@ -33,5 +43,26 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie getMovieById(int movieId) {
         return movieDao.getMovieByMovieId(movieId);
+    }
+
+    @Override
+    public Movie addMovie(MovieRequestDto movieRequestDto) {
+
+        MovieImage movieImage = movieImageService.addMovieImage(movieRequestDto.getImageUrl());
+        Category category = categoryService.getCategoryById(movieRequestDto.getCategoryId());
+        Director director = directorService.getDirectorById(movieRequestDto.getDirectorId());
+
+        Movie movie = Movie.builder()
+                .movieName(movieRequestDto.getMovieName())
+                .description(movieRequestDto.getDescription())
+                .duration(movieRequestDto.getDuration())
+                .releaseDate(movieRequestDto.getReleaseDate())
+                .movieTrailerUrl(movieRequestDto.getTrailerUrl())
+                .image(movieImage)
+                .category(category)
+                .director(director)
+                .build();
+
+        return movieDao.save(movie);
     }
 }

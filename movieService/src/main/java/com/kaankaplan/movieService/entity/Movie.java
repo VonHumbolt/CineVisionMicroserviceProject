@@ -1,6 +1,7 @@
 package com.kaankaplan.movieService.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "movie")
+@Builder
 public class Movie {
 
     @Id

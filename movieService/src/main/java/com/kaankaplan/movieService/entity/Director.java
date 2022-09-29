@@ -22,5 +22,6 @@ public class Director {
     private String directorName;
 
     @OneToMany(mappedBy = "director")
+    @JsonIgnore
     private List<Movie> movieList;
 }

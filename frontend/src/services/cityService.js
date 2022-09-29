@@ -12,4 +12,7 @@ export class CityService {
         return axios.get(this.apiUrl + "getall");
     }
 
+    addCity(cityDto) {
+        return axios.post(this.apiUrl + "add", cityDto);
+    }
 }

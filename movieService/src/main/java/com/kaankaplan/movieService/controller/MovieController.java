@@ -2,6 +2,7 @@ package com.kaankaplan.movieService.controller;
 
 import com.kaankaplan.movieService.business.abstracts.MovieService;
 import com.kaankaplan.movieService.entity.Movie;
+import com.kaankaplan.movieService.entity.dto.MovieRequestDto;
 import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,10 @@ public class MovieController {
     @GetMapping("{movieId}")
     public MovieResponseDto getMovieById(@PathVariable int movieId){
         return movieService.getMovieByMovieId(movieId);
+    }
+
+    @PostMapping("add")
+    public Movie addMovie(@RequestBody MovieRequestDto movieRequestDto){
+        return movieService.addMovie(movieRequestDto);
     }
 }

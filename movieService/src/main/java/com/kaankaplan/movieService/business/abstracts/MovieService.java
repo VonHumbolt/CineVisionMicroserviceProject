@@ -1,6 +1,7 @@
 package com.kaankaplan.movieService.business.abstracts;
 
 import com.kaankaplan.movieService.entity.Movie;
+import com.kaankaplan.movieService.entity.dto.MovieRequestDto;
 import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface MovieService {
 
     Movie getMovieById(int movieId);
 
+    Movie addMovie(MovieRequestDto movieRequestDto);
 }

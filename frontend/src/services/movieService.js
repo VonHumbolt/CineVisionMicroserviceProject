@@ -15,4 +15,8 @@ export class MovieService {
     getMovieById(movieId) {
         return axios.get(this.apiUrl + movieId);
     }
+
+    addMovie(movieDto) {
+        return axios.post(this.apiUrl + "add", movieDto);
+    }
 }

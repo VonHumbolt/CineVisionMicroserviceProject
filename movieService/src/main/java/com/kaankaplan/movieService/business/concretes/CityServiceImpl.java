@@ -1,8 +1,11 @@
 package com.kaankaplan.movieService.business.concretes;
 
 import com.kaankaplan.movieService.business.abstracts.CityService;
+import com.kaankaplan.movieService.business.abstracts.MovieService;
 import com.kaankaplan.movieService.dao.CityDao;
 import com.kaankaplan.movieService.entity.City;
+import com.kaankaplan.movieService.entity.Movie;
+import com.kaankaplan.movieService.entity.dto.CityRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.List;
 public class CityServiceImpl implements CityService {
 
     private final CityDao cityDao;
+    private final MovieService movieService;
 
     @Override
     public List<City> getCitiesByMovieId(int movieId) {
@@ -23,5 +27,17 @@ public class CityServiceImpl implements CityService {
     @Override
     public List<City> getall() {
         return cityDao.findAll(Sort.by(Sort.Direction.ASC, "cityName"));
+    }
+
+    @Override
+    public void add(CityRequestDto cityRequestDto) {
+        Movie movie = movieService.getMovieById(cityRequestDto.getMovieId());
+        for (String cityName: cityRequestDto.getCityNameList()) {
+            City city = City.builder()
+                    .cityName(cityName)
+                    .movie(movie)
+                    .build();
+            cityDao.save(city);
+        }
     }
 }
