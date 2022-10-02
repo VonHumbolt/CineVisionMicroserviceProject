@@ -18,5 +18,6 @@ public class TicketInformationDto {
     private String email;
     private String fullName;
     private String phone;
+    private String chairNumbers;
 
 }

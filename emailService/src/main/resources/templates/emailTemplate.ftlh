@@ -27,6 +27,7 @@
                 <h5><b>Tarih: </b> ${movieDay} </h5>
                 <h5><b>Sinema: </b> ${saloonName} </h5>
                 <h5><b>Seans: </b> ${movieStartTime} </h5>
+                <h5><b>Koltuk: </b> ${chairNumbers} </h5>
 
             </div>
             <br>

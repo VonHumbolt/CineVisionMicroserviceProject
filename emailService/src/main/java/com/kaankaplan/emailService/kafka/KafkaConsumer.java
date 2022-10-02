@@ -24,6 +24,7 @@ public class KafkaConsumer {
         model.put("movieDay", emailMessageKafkaDto.getMovieDay());
         model.put("saloonName", emailMessageKafkaDto.getSaloonName());
         model.put("movieStartTime", emailMessageKafkaDto.getMovieStartTime());
+        model.put("chairNumbers", emailMessageKafkaDto.getChairNumbers());
 
         emailService.sendEmail(emailMessageKafkaDto.getSender(), emailMessageKafkaDto.getRecipient(), emailMessageKafkaDto.getSubtitle(), model);
     }

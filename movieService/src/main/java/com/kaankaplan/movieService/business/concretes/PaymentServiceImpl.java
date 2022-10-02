@@ -25,6 +25,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .movieDay(ticketInformationDto.getMovieDay())
                 .movieStartTime(ticketInformationDto.getMovieStartTime())
                 .saloonName(ticketInformationDto.getSaloonName())
+                .chairNumbers(ticketInformationDto.getChairNumbers())
                 .build();
 
         kafkaProducer.sendMessage(emailMessage);

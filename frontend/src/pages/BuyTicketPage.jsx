@@ -15,8 +15,36 @@ export default function BuyTicketPage() {
     const [ticketItem, setTicketItem] = useState("ticketSection")
     const [adultTicketNumber, setAdultTicketNumber] = useState(0)
     const [studentTicketNumber, setStudentTicketNumber] = useState(0)
+    const [chairNumber, setChairNumber] = useState(studentTicketNumber + adultTicketNumber)
+    const [chairNumberList, setChairNumberList] = useState([])
 
     const movieState = useSelector(state => state.movie.payload)
+
+    function checkChairIsEmpty(elementId) {
+        let classname = document.getElementById(elementId).className;
+        if(classname === "taken"){
+            return false;
+        }
+        return true;
+    }
+
+    function selectChair(elementId) {
+        let item = document.getElementById(elementId);
+        if(checkChairIsEmpty(elementId) && chairNumber > 0) {
+            item.style.background = "#ff6a00";
+            item.className = "taken";
+            setChairNumberList([...chairNumberList, elementId]);
+            setChairNumber(chairNumber-1)
+        } else {
+            if(item.className == "taken"){
+                item.removeAttribute("style");
+                item.className= "empty";
+                let list = chairNumberList.filter(item => item != elementId);
+                setChairNumberList(list);
+                setChairNumber(chairNumber+1)
+            }
+        }
+    }
 
   return (
     <div className='ticket-page'>
@@ -69,7 +97,10 @@ export default function BuyTicketPage() {
                                                     <button className='btn btn-dark'
                                                         data-bs-toggle="collapse" 
                                                         data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo"
-                                                        onClick={() => setTicketItem("placeSection")}>Devam Et</button>
+                                                        onClick={() => {
+                                                            setTicketItem("placeSection")
+                                                            setChairNumber(studentTicketNumber + adultTicketNumber)
+                                                        }}>Devam Et</button>
                                                 :  
                                                     <button className='btn btn-outline-dark'
                                                         data-bs-toggle="collapse" 
@@ -79,8 +110,8 @@ export default function BuyTicketPage() {
                                         
                                 </div>
                             </h2>
-                            {ticketItem === 'ticketSection' ? (
 
+                            {ticketItem === 'ticketSection' ? (
                                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                     <div class="accordion-body">
                                         <section>
@@ -96,7 +127,7 @@ export default function BuyTicketPage() {
                                                     Tam
                                                 </div>
                                                 <div className='col-sm-3 border-end'>
-                                                    Fiyat ₺
+                                                    Fiyat 25₺
                                                 </div>
                                                 <div className='col-sm-3'>
                                                     <div className='row justify-content-center align-items-center'>
@@ -124,7 +155,7 @@ export default function BuyTicketPage() {
                                                     Öğrenci
                                                 </div>
                                                 <div className='col-sm-3 border-end'>
-                                                    Fiyat ₺
+                                                    Fiyat 15₺
                                                 </div>
                                                 <div className='col-sm-3'>
                                                     <div className='row justify-content-center align-items-center'>
@@ -156,7 +187,7 @@ export default function BuyTicketPage() {
                                 </div>
                             ): null}
                         </div>
-
+                        
                         {/* Place Section */}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
@@ -169,101 +200,107 @@ export default function BuyTicketPage() {
                                                 <button className='btn btn-dark' data-bs-toggle="collapse" 
                                                     data-bs-target="#panelsStayOpen-collapseThree"
                                                     aria-expanded="false" aria-controls="panelsStayOpen-collapseThree"
-                                                    onClick={() => setTicketItem("paySection")}>Devam Et</button>
+                                                    onClick={() => {setTicketItem("paySection")}}>Devam Et</button>
                                             :
-                                                // <button className='btn btn-outline-dark' data-bs-toggle="collapse" 
-                                                //     data-bs-target="#panelsStayOpen-collapseTwo"
-                                                //     aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo"
-                                                //     onClick={() => setTicketItem("placeSection")}>Değiştir</button>
-                                                null
+                                                <button className='btn btn-outline-dark' data-bs-toggle="collapse" 
+                                                    data-bs-target="#panelsStayOpen-collapseTwo"
+                                                    aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo"
+                                                    onClick={() => setTicketItem("placeSection")}>Değiştir</button>
                                             }
                                         </div>
                                 </div>
                             </h2>
+
                                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
+                                    {ticketItem === "placeSection" ? 
                                         <table class="table">
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">F</th>
                                                     <td></td>
                                                     <td></td>
-                                                    <td className='px-0' onClick={() => {
-                                                        
-                                                    }}> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td className='px-0'> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="F1" onClick={() => selectChair("F1")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="F2" onClick={() => selectChair("F2")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="F3" onClick={() => selectChair("F3")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="F4" onClick={() => selectChair("F4")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="F5" onClick={() => selectChair("F5")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="F6" onClick={() => selectChair("F6")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="F7" onClick={() => selectChair("F7")}> <i class="fa-solid fa-chair"></i> </td>
                                                 </tr>
                                                 <tr>
                                                 <th >E</th>
                                                     <td></td>
                                                     <td></td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="E1" onClick={() => selectChair("E1")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="E2" onClick={() => selectChair("E2")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="E3" onClick={() => selectChair("E3")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="E4" onClick={() => selectChair("E4")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="E5" onClick={() => selectChair("E5")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="E6" onClick={() => selectChair("E6")}> <i class="fa-solid fa-chair"></i> </td>
                                                 </tr>
                                                 <tr>
                                                     <th>D</th>
                                                     <td></td>
                                                     <td></td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="D1" onClick={() => selectChair("D1")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="D2" onClick={() => selectChair("D2")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="D3" onClick={() => selectChair("D3")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="D4" onClick={() => selectChair("D4")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="D5" onClick={() => selectChair("D5")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="D6" onClick={() => selectChair("D6")}> <i class="fa-solid fa-chair"></i> </td>
                                                 </tr>
                                                 <tr>
                                                     <th>C</th>
                                                     <td></td>
                                                     <td></td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="C1" onClick={() => selectChair("C1")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="C2" onClick={() => selectChair("C2")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="C3" onClick={() => selectChair("C3")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="C4" onClick={() => selectChair("C4")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="C5" onClick={() => selectChair("C5")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="C6" onClick={() => selectChair("C6")}> <i class="fa-solid fa-chair"></i> </td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">B</th>
                                                     <td></td>
                                                     <td></td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B1" onClick={() => selectChair("B1")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B2" onClick={() => selectChair("B2")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B3" onClick={() => selectChair("B3")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B4" onClick={() => selectChair("B4")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B5" onClick={() => selectChair("B5")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B6" onClick={() => selectChair("B6")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B7" onClick={() => selectChair("B7")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="B8" onClick={() => selectChair("B8")}> <i class="fa-solid fa-chair"></i> </td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">A</th>
                                                     <td></td>
                                                     <td></td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
-                                                    <td> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A1" onClick={() => selectChair("A1")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A2" onClick={() => selectChair("A2")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A3" onClick={() => selectChair("A3")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A4" onClick={() => selectChair("A4")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A5" onClick={() => selectChair("A5")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A6" onClick={() => selectChair("A6")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A7" onClick={() => selectChair("A7")}> <i class="fa-solid fa-chair"></i> </td>
+                                                    <td id="A8" onClick={() => selectChair("A8")}> <i class="fa-solid fa-chair"></i> </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                            <p className='pt-2'>Perde</p>
-                                            <hr style={{height:"4px", color:"black"}}/>
+                                            : null}
+                                            {ticketItem === "placeSection" ? (
+                                                <div>
+                                                    <p className='pt-2'>Perde</p>
+                                                    <hr style={{height:"4px", color:"black"}}/>
+                                                </div>
+                                            )
+                                            : null}
                                     </div>
                                 </div>
-                        </div>
+                                
+                                </div>
 
                         {/* Pay Section */}
                         <div class="accordion-item">
@@ -282,10 +319,15 @@ export default function BuyTicketPage() {
                             </h2>
                             
                             <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                            {ticketItem == "paySection" ? 
                             <div class="accordion-body">
                                 <Formik
                                     initialValues={{}}
                                     onSubmit={(values) => {
+                                        let  result = ""
+                                        chairNumberList.map(item => result = result + " " + item);
+
+                                        values.chairNumbers = result;
                                         values.movieName = movieState?.movieName;
                                         values.saloonName= movieState?.saloonName;
                                         values.movieDay= movieState?.movieDay;
@@ -345,8 +387,8 @@ export default function BuyTicketPage() {
                                         </div>
                                     </Form>
                                 </Formik>
-
                             </div>
+                            : null}
                             </div>
                         </div>
                     </div>

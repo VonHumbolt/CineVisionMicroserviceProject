@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cities/")
+@RequestMapping("/api/movie/cities/")
 @RequiredArgsConstructor
 @CrossOrigin
 public class CityController {

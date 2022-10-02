@@ -14,6 +14,7 @@
     <module>userService</module>
     <module>eureka-server</module>
       <module>emailService</module>
+      <module>api-gateway</module>
   </modules>
 
   <name>CineVisionMicroservice</name>

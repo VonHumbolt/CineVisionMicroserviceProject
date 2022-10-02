@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/directors/")
+@RequestMapping("/api/movie/directors/")
 @RequiredArgsConstructor
 @CrossOrigin
 public class DirectorController {

@@ -22,11 +22,12 @@
                 <br> Sayın ${fullName}, bilet almak için CineVision'ı tercih ettiğiniz için teşekkür ederiz.<br>
                 <br>
                 <h3>Bilet Detayları</h3>
-                <h5>${movieName}</h5>
+                <h4>${movieName}</h4>
                 <br>
-                <h6><b>Tarih: </b> ${movieDay} </h6>
-                <h6><b>Sinema: </b> ${saloonName} </h6>
-                <h6><b>Seans: </b> ${movieStartTime} </h6>
+                <h5><b>Tarih: </b> ${movieDay} </h5>
+                <h5><b>Sinema: </b> ${saloonName} </h5>
+                <h5><b>Seans: </b> ${movieStartTime} </h5>
+                <h5><b>Koltuk: </b> ${chairNumbers} </h5>
 
             </div>
             <br>

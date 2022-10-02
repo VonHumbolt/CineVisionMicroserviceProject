@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/payments/")
+@RequestMapping("/api/movie/payments/")
 @RequiredArgsConstructor
 @CrossOrigin
 public class PaymentController {

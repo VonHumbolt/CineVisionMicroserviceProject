@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/customers/")
+@RequestMapping("/api/user/customers/")
 @CrossOrigin
 @RequiredArgsConstructor
 public class CustomerController {
