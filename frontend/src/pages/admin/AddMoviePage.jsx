@@ -59,6 +59,8 @@ export default function AddMoviePage() {
                 initialValues={initValues}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
+                    values.userAccessToken = ""; // Change here
+
                     if(values.directorId === undefined){
                         let director={
                             directorName: values.directorName

@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import LoginModal from '../pages/LoginModal';
 import RegisterModal from '../pages/RegisterModal';
 import { MovieService } from '../services/movieService';
+import LoggedOut from './LoggedOut';
+import LoggedIn from './LoggedIn';
 
 export default function Navbar() {
 
     const navigate = useNavigate()
+
     const movieService = new MovieService();
 
     const [moviesInVision, setMoviesInVision] = useState([])
     const [comingSoonMovies, setComingSoonMovies] = useState([])
+
+    const userFromRedux = useSelector(state => state.user.payload);
 
     useEffect(() => {
       
@@ -19,7 +25,6 @@ export default function Navbar() {
 
     }, [])
     
-
 
     function showSearchInputBar() {
         let searchBar = document.querySelector(".search-input");
@@ -49,11 +54,8 @@ export default function Navbar() {
                         <li class="nav-item"><a class="nav-link" href="#!"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             Filmler</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#!"
-                            data-bs-toggle="modal" data-bs-target="#registerModal">Kayıt Ol</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!"
-                            data-bs-toggle="modal" data-bs-target="#loginModal">Giriş</a></li>
+                        
+                        { userFromRedux ? <LoggedIn /> : <LoggedOut /> }
                     </ul>
                 </div>
             </div>
