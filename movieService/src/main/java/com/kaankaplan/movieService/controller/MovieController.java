@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/movie/movies/")
 @RequiredArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 public class MovieController {
 
     private final MovieService movieService;

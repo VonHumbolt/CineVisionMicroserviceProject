@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/movie/categories/")
 @RequiredArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 public class CategoryController {
 
     private final CategoryService categoryService;

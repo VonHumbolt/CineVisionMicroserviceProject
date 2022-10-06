@@ -13,8 +13,15 @@ spring:
           json:
             trusted:
               packages: "*"
+            type:
+              mapping: event:com.kaankaplan.emailService.dto.EmailMessageKafkaDto
     topic:
       name: email_topics
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0
 
   mail:
     default-encoding: UTF-8

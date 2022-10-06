@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/movie/actors/")
 @RequiredArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 public class ActorController {
 
     private final ActorService actorService;

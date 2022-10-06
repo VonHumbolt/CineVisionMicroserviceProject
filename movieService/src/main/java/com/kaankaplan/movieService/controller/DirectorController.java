@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/movie/directors/")
 @RequiredArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 public class DirectorController {
 
     private final DirectorService directorService;

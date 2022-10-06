@@ -47,6 +47,8 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie addMovie(MovieRequestDto movieRequestDto) {
 
+
+
         Category category = categoryService.getCategoryById(movieRequestDto.getCategoryId());
         Director director = directorService.getDirectorById(movieRequestDto.getDirectorId());
 

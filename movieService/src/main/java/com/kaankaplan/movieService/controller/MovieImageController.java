@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/movie/images/")
 @RequiredArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 public class MovieImageController {
 
     private final MovieImageService movieImageService;

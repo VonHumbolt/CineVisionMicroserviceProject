@@ -3,6 +3,8 @@ package com.kaankaplan.movieService.controller;
 import com.kaankaplan.movieService.business.abstracts.CommentService;
 import com.kaankaplan.movieService.entity.Comment;
 import com.kaankaplan.movieService.entity.dto.CommentRequestDto;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +24,19 @@ public class CommentController {
     }
 
     @PostMapping("add")
-    public void addComment(@RequestBody CommentRequestDto comment) {
+    @CircuitBreaker(name = "comment", fallbackMethod = "fallback")
+    @Retry(name="comment")
+    public String addComment(@RequestBody CommentRequestDto comment) {
         commentService.addComment(comment);
+        return "Yorum başarıyla eklendi";
     }
 
     @PostMapping("delete/{commentId}")
     public void deleteComment(@PathVariable int commentId) {
         commentService.deleteComment(commentId);
     }
+    private String fallback(CommentRequestDto commentRequestDto, RuntimeException runtimeException) {
+        return "Bağlantı hatası";
+    }
+
 }

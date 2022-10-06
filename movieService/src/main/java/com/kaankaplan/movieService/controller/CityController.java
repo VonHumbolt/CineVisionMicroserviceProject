@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/movie/cities/")
 @RequiredArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 public class CityController {
 
     private final CityService cityService;

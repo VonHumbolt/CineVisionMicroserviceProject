@@ -1,6 +1,6 @@
 package com.kaankaplan.movieService.kafka;
 
-import com.kaankaplan.cineVision.dto.EmailMessageKafkaDto;
+import com.kaankaplan.movieService.entity.dto.EmailMessageKafkaDto;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

@@ -22,11 +22,54 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: event:com.kaankaplan.movieService.entity.dto.EmailMessageKafkaDto
     topic:
       name: email_topics
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+
 eureka:
   client:
     service-url:
       defaultZone: http://eureka:password@localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+
+# Circuit Breaker
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  server:
+    port: 8000
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventory:
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+  retry:
+    instances:
+      inventory:
+        max-attempts: 3
+        wait-duration: 5s

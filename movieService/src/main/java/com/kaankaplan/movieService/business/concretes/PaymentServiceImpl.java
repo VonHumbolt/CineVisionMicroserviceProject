@@ -1,6 +1,6 @@
 package com.kaankaplan.movieService.business.concretes;
 
-import com.kaankaplan.cineVision.dto.EmailMessageKafkaDto;
+import com.kaankaplan.movieService.entity.dto.EmailMessageKafkaDto;
 import com.kaankaplan.movieService.business.abstracts.PaymentService;
 import com.kaankaplan.movieService.entity.dto.TicketInformationDto;
 import com.kaankaplan.movieService.kafka.KafkaProducer;

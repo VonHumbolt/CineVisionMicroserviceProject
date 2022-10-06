@@ -37,7 +37,8 @@ public class CommentServiceImpl implements CommentService {
     public void addComment(CommentRequestDto commentRequestDto) {
 
         Boolean result = webClientBuilder.build().get()
-                .uri("http://USERSERVICE/api/user/customers/isExist/" + commentRequestDto.getUserId())
+                .uri("http://USERSERVICE/api/user/users/isUserCustomer")
+                .header("Authorization","Bearer " + commentRequestDto.getToken())
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
