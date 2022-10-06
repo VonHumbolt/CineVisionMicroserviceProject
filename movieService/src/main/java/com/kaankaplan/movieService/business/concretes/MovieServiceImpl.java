@@ -13,6 +13,7 @@ import com.kaankaplan.movieService.entity.dto.MovieRequestDto;
 import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class MovieServiceImpl implements MovieService {
     private final MovieDao movieDao;
     private final CategoryService categoryService;
     private final DirectorService directorService;
+    private final WebClient.Builder webClientBuilder;
 
     @Override
     public List<MovieResponseDto> getAllDisplayingMoviesInVision() {
@@ -47,22 +49,30 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie addMovie(MovieRequestDto movieRequestDto) {
 
+        Boolean result = webClientBuilder.build().get()
+                .uri("http://USERSERVICE/api/user/users/isUserAdmin")
+                .header("Authorization", "Bearer " + movieRequestDto.getUserAccessToken())
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
 
+        if (result) {
+            Category category = categoryService.getCategoryById(movieRequestDto.getCategoryId());
+            Director director = directorService.getDirectorById(movieRequestDto.getDirectorId());
 
-        Category category = categoryService.getCategoryById(movieRequestDto.getCategoryId());
-        Director director = directorService.getDirectorById(movieRequestDto.getDirectorId());
+            Movie movie = Movie.builder()
+                    .movieName(movieRequestDto.getMovieName())
+                    .description(movieRequestDto.getDescription())
+                    .duration(movieRequestDto.getDuration())
+                    .releaseDate(movieRequestDto.getReleaseDate())
+                    .movieTrailerUrl(movieRequestDto.getTrailerUrl())
+                    .category(category)
+                    .director(director)
+                    .isDisplay(movieRequestDto.isInVision())
+                    .build();
+            return movieDao.save(movie);
+        }
 
-        Movie movie = Movie.builder()
-                .movieName(movieRequestDto.getMovieName())
-                .description(movieRequestDto.getDescription())
-                .duration(movieRequestDto.getDuration())
-                .releaseDate(movieRequestDto.getReleaseDate())
-                .movieTrailerUrl(movieRequestDto.getTrailerUrl())
-                .category(category)
-                .director(director)
-                .isDisplay(movieRequestDto.isInVision())
-                .build();
-
-        return movieDao.save(movie);
+        throw new RuntimeException("Yetki hatası");
     }
 }

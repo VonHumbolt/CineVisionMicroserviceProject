@@ -24,4 +24,5 @@ public class MovieRequestDto {
     private int directorId;
     private List<Integer> actors;
     private List<Integer> cities;
+    private String userAccessToken;
 }
