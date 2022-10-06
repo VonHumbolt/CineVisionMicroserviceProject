@@ -2,6 +2,7 @@ package com.kaankaplan.movieService.controller;
 
 import com.kaankaplan.movieService.business.abstracts.DirectorService;
 import com.kaankaplan.movieService.entity.Director;
+import com.kaankaplan.movieService.entity.dto.DirectorRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class DirectorController {
     }
 
     @PostMapping("add")
-    public Director add(@RequestBody Director director) {
-        return directorService.add(director);
+    public Director add(@RequestBody DirectorRequestDto directorRequestDto) {
+        return directorService.add(directorRequestDto);
     }
 }

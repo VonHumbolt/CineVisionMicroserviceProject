@@ -5,14 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ActorRequestDto {
-    private int movieId;
-    private List<String> actorNameList;
+public class DirectorRequestDto {
+    private String directorName;
     private String token;
 }

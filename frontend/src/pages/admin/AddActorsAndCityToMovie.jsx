@@ -8,11 +8,14 @@ import KaanKaplanSelect from '../../utils/customFormItems/KaanKaplanSelect'
 import KaanKaplanTextInput from '../../utils/customFormItems/KaanKaplanTextInput'
 import * as yup from "yup";
 import { MovieImageService } from '../../services/movieImageService';
+import { useSelector } from 'react-redux';
 
 export default function AddActorsAndCityToMovie() {
 
     let {movieId} = useParams();
     const navigate = useNavigate()
+
+    const userFromRedux = useSelector(state => state.user.payload)
 
     const cityService = new CityService();
     const actorService = new ActorService();
@@ -80,15 +83,22 @@ export default function AddActorsAndCityToMovie() {
                     }
                     let actorDto = {
                         movieId: movieId,
-                        actorNameList: actorNameList
+                        actorNameList: actorNameList,
+                        token: userFromRedux.token
                     }
                     let cityDto = {
                         movieId: movieId,
-                        cityNameList: values.cities
+                        cityNameList: values.cities,
+                        token: userFromRedux.token
+                    }
+                    let movieImageDto = {
+                        movieId: movieId,
+                        imageUrl: values.imageUrl,
+                        token: userFromRedux.token
                     }
                     
                     actorService.addActor(actorDto);
-                    movieImageService.addMovieImage(values.imageUrl, movieId);
+                    movieImageService.addMovieImage(movieImageDto);
                     cityService.addCity(cityDto).then(result => navigate("/addMovie"));
                 }}>
 

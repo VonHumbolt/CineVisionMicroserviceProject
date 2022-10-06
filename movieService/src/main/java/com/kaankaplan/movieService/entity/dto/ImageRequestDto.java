@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ActorRequestDto {
+public class ImageRequestDto {
+
     private int movieId;
-    private List<String> actorNameList;
+    private String imageUrl;
     private String token;
 }

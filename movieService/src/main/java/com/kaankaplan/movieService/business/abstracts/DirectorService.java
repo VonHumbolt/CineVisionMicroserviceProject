@@ -1,6 +1,7 @@
 package com.kaankaplan.movieService.business.abstracts;
 
 import com.kaankaplan.movieService.entity.Director;
+import com.kaankaplan.movieService.entity.dto.DirectorRequestDto;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface DirectorService {
 
     Director getDirectorById(int directorId);
 
-    Director add(Director director);
+    Director add(DirectorRequestDto directorRequestDto);
 }

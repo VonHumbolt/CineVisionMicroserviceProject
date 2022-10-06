@@ -3,9 +3,11 @@ package com.kaankaplan.movieService.business.concretes;
 import com.kaankaplan.movieService.business.abstracts.DirectorService;
 import com.kaankaplan.movieService.dao.DirectorDao;
 import com.kaankaplan.movieService.entity.Director;
+import com.kaankaplan.movieService.entity.dto.DirectorRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class DirectorServiceImpl implements DirectorService {
 
     private final DirectorDao directorDao;
+    private final WebClient.Builder webClientBuilder;
 
     @Override
     public List<Director> getall() {
@@ -26,7 +29,21 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public Director add(Director director) {
-        return directorDao.save(director);
+    public Director add(DirectorRequestDto directorRequestDto)
+    {
+        Boolean result = webClientBuilder.build().get()
+                .uri("http://USERSERVICE/api/user/isUserAdmin")
+                .header("Authorization", "Bearer " + directorRequestDto.getToken())
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+
+        if (result) {
+            Director director = Director.builder()
+                    .directorName(directorRequestDto.getDirectorName())
+                    .build();
+            return directorDao.save(director);
+        }
+        throw new RuntimeException("Yetki hatası");
     }
 }

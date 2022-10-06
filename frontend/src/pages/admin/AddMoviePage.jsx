@@ -12,8 +12,11 @@ import KaanKaplanTextArea from '../../utils/customFormItems/KaanKaplanTextArea';
 import { MovieService } from '../../services/movieService';
 import { useNavigate } from 'react-router-dom';
 import KaanKaplanCheckBox from '../../utils/customFormItems/KaanKaplanCheckBox';
+import { useSelector } from 'react-redux';
 
 export default function AddMoviePage() {
+
+    const userFromRedux = useSelector(state => state.user.payload)
 
     const navigate = useNavigate()
 
@@ -59,11 +62,12 @@ export default function AddMoviePage() {
                 initialValues={initValues}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
-                    values.userAccessToken = ""; // Change here
+                    values.userAccessToken = userFromRedux.token; // Change here
 
                     if(values.directorId === undefined){
                         let director={
-                            directorName: values.directorName
+                            directorName: values.directorName,
+                            token: userFromRedux.token
                         }
                         directorService.add(director).then(result => {
                             values.directorId = result.data.directorId
