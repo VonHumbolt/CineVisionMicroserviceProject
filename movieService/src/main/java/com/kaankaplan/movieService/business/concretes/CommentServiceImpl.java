@@ -6,6 +6,7 @@ import com.kaankaplan.movieService.dao.CommentDao;
 import com.kaankaplan.movieService.entity.Comment;
 import com.kaankaplan.movieService.entity.Movie;
 import com.kaankaplan.movieService.entity.dto.CommentRequestDto;
+import com.kaankaplan.movieService.entity.dto.DeleteCommentRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,12 +30,28 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(int id) {
-        commentDao.deleteById(id);
+    public int getNumberOfCommentsByMovieId(int movieId) {
+        return commentDao.countCommentByMovieMovieId(movieId);
     }
 
     @Override
-    public void addComment(CommentRequestDto commentRequestDto) {
+    public void deleteComment(DeleteCommentRequestDto deleteCommentRequestDto) {
+
+        Boolean result = webClientBuilder.build().get()
+                .uri("http://USERSERVICE/api/user/users/isUserCustomer")
+                .header("Authorization","Bearer " + deleteCommentRequestDto.getToken())
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+
+        if (result) {
+            commentDao.deleteById(deleteCommentRequestDto.getCommentId());
+        }
+
+    }
+
+    @Override
+    public Comment addComment(CommentRequestDto commentRequestDto) {
 
         Boolean result = webClientBuilder.build().get()
                 .uri("http://USERSERVICE/api/user/users/isUserCustomer")
@@ -47,13 +64,14 @@ public class CommentServiceImpl implements CommentService {
             Movie movie = movieService.getMovieById(commentRequestDto.getMovieId());
 
             Comment comment = Comment.builder()
+                    .commentByUserId(commentRequestDto.getCommentByUserId())
                     .commentBy(commentRequestDto.getCommentBy())
                     .commentText(commentRequestDto.getCommentText())
                     .movie(movie)
                     .build();
 
-            commentDao.save(comment);
+            return commentDao.save(comment);
         }
-
+        throw new RuntimeException("Yetki hatası");
     }
 }

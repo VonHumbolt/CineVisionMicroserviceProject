@@ -22,6 +22,7 @@ public class Comment {
 
     private String commentText;
     private String commentBy;
+    private String commentByUserId;
 
     @ManyToOne
     @JsonIgnore

@@ -43,14 +43,14 @@ export default function Navbar() {
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto align-items-center">
-                        <li className='nav-item'>
+                        {/* <li className='nav-item'>
                             <div class="input-group mt-1 align-items-center">
                                 <input type="text" class="form-control search-input"
                                  placeholder="Ara..." aria-label="Recipient's username" aria-describedby="basic-addon2" />
                                 <a class="input-group-text search-btn" id="basic-addon2"
                                     onClick={() => showSearchInputBar()}><i class="fa-solid fa-magnifying-glass"></i></a>
                             </div>
-                        </li>
+                        </li> */}
                         <li class="nav-item"><a class="nav-link" href="#!"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             Filmler</a></li>

@@ -10,7 +10,7 @@ import { MovieService } from '../services/movieService';
 import dateConvert from '../utils/dateConverter';
 import dateConvertForTicket from '../utils/dateConvertForTicket';
 import { SaloonTimeService } from '../services/saloonTimeService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addMovieToState, cleanState } from '../store/actions/movieActions';
 import { CommentService } from '../services/commentService';
 
@@ -19,6 +19,8 @@ export default function DetailPage() {
     let {movieId} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const userFromRedux = useSelector(state => state.user.payload);
 
     let date = new Date();
 
@@ -37,6 +39,9 @@ export default function DetailPage() {
     const [saloonTimes, setSaloonTimes] = useState([])
     const [selectedDay, setSelectedDay] = useState(dateConvert(date))
     const [comments, setComments] = useState([])
+    const [commentText, setCommentText] = useState("")
+    const [countOfComments, setCountOfComments] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         
@@ -48,6 +53,7 @@ export default function DetailPage() {
             const films = result.data.filter(m => m.movieId != movieId);
             setOtherMovies(films);
         })
+        commentService.getCountOfComments(movieId).then(result => setCountOfComments(result.data));
         getComments(1, 5);
 
     }, [])
@@ -59,7 +65,13 @@ export default function DetailPage() {
     }
 
     function getComments(pageNo, pageSize=5) {
-        commentService.getCommentsByMovieId(movieId, pageNo, pageSize).then(result => setComments(result.data))
+        commentService.getCommentsByMovieId(movieId, pageNo, pageSize).then(result => {
+            if (comments.length > 0 && pageNo > 1) {
+                setComments([...comments, ...result.data])
+            }else {
+                setComments(result.data)
+            }
+        })
     }
 
     function addState(movieTime) {
@@ -77,6 +89,48 @@ export default function DetailPage() {
         dispatch(addMovieToState(movieDto));
         navigate("buyTicket")
     }
+
+    function sendCommentText() {
+
+        if(userFromRedux) {
+            if(commentText.trim().length > 0) {
+                let commentDto = {
+                    commentByUserId: userFromRedux.userId,
+                    commentText: commentText,
+                    commentBy: userFromRedux.fullName,
+                    token: userFromRedux.token,
+                    movieId: movieId
+                }
+                
+                commentService.addComment(commentDto).then(result => {
+                    if(result.status == 200) {
+                        document.querySelector("#commentArea").value = "";
+                        setComments([...comments, result.data])
+                        // toastify - yorumunuz eklendi
+                    }
+                })
+
+            } else {
+                // toastify - boş yorum yapılamaz
+            }
+        } else {
+            // toastify - yorum yapmak için lütfen giriş yapın
+        }
+    }
+
+    function deleteComment(commentId) {
+        let deleteCommentDto = {
+            commentId: commentId,
+            token: userFromRedux.token
+        }
+        commentService.deleteComment(deleteCommentDto).then(result => {
+            if(result.status == 200){
+                let newComments = comments.filter(c => c.commentId != commentId);
+                setComments(newComments);
+            }
+        })
+    }
+
   return (
     <div>
         <section className='detail-bg pt-5'>
@@ -175,7 +229,6 @@ export default function DetailPage() {
             </div>
         </section>
 
-
         {/* Ticket Detail Section */}
         {selectedSaloon ? (
             <section id="ticketDetailSection" className='px-5 py-1 pb-5'>
@@ -221,28 +274,46 @@ export default function DetailPage() {
                     <div className='col-sm-12 col-md-6 text-start'>
                        <h3>Yorumlar</h3>
                        {/* Yorumları listele */}
-                       {comments.length == 0 ? (
-                           <p className='lead mt-4'>İlk Yorumu sen yaz</p>
-                       ): null}
+                       <div style={{height: "200px", overflow:"scroll",overflowX: "hidden"}}>
+                            {comments.length == 0 ? (
+                                <p className='lead mt-4'>İlk Yorumu sen yaz</p>
+                            ): null}
 
-                        {comments.map(comment => (
-                            <div>
-                                <p className='lead mt-4'>{comment.commentText}</p>
-                                <p className='small mt-0'>{comment.commentBy}</p>
-                            </div>
-                        ))}
-                        
-                        <hr />
+                            {comments.map(comment => (
+                                <div className='row align-items-center'>
+                                    <div className='col-sm-10'>
+                                        <p className='lead mt-4'>{comment.commentText}</p>
+                                        <p className='small mt-0'>{comment.commentBy}</p>
+                                    </div>
+                                    {userFromRedux && comment.commentByUserId == userFromRedux.userId ? 
+                                        <div className='col-sm-2'>
+                                            <p className='small mb-0' onClick={() => {deleteComment(comment.commentId)}}> 
+                                                <i class="fa-solid fa-xmark" ></i>
+                                            </p>
+                                        </div>
+                                        :
+                                        null
+                                    }
+                                </div>
+                            ))}
+                            <hr />
+                            <div className='text-center'>
+                                {currentPage < Math.ceil(countOfComments / 5) && countOfComments > 5 ?
+                                    <a href='#!' className='a-pagination lead mt-4'
+                                        onClick={() => {
+                                            getComments(currentPage + 1)
+                                            setCurrentPage(currentPage+1)
+                                        }}>Daha fazla göster</a>
+                                : null}
+                            </div> 
+                       </div>
 
-                        {comments.length > 0 ? (
-                           <a href='#!' className='text-center lead mt-4'>Daha fazla göster</a>
-                        ): null}
 
                     </div>
                     <div className='col-sm-12 col-md-6 text-start'>
                         <h3>Yorum Yap</h3>
-                            <textarea className='text-dark mb-3' placeholder='Yorumunuz'></textarea>
-                            <button class="comment-btn btn btn-dark btn-lg col-12" type="button"><strong>Gönder</strong></button>
+                            <textarea id="commentArea" className='text-dark mb-3' placeholder='Yorumunuz' onChange={(e) => setCommentText(e.target.value)} ></textarea>
+                            <button class="comment-btn btn btn-dark btn-lg col-12" type="button" onClick={() => sendCommentText()}><strong>Gönder</strong></button>
                     </div>
                 </div>
             </div>

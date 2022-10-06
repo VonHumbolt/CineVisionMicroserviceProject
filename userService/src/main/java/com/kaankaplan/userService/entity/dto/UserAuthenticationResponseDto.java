@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class UserAuthenticationResponseDto {
     private String userId;
     private String email;
+    private String fullName;
     private String token;
 }

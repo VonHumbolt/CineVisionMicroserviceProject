@@ -9,11 +9,13 @@ export default function dateConvertForTicket(date) {
     return (
         <div>
             {new Date(date).getDay() === new Date().getDay() ? (
-                <h4 className="pt-2">Bugün</h4>
+                <h4 id="today" className="pt-2 text-primary">Bugün</h4>
             ): <h5>{day}</h5>} 
             
             {new Date(date).getDay() !== new Date().getDay() ? (
-                <h5>{dayName}</h5> 
+                <h5 onClick={() => {
+                    document.getElementById("today").className = "pt-2"
+                }}>{dayName}</h5> 
             ): null} 
         </div>
     );

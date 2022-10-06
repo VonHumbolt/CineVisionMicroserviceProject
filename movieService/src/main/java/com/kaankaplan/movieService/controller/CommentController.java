@@ -3,6 +3,7 @@ package com.kaankaplan.movieService.controller;
 import com.kaankaplan.movieService.business.abstracts.CommentService;
 import com.kaankaplan.movieService.entity.Comment;
 import com.kaankaplan.movieService.entity.dto.CommentRequestDto;
+import com.kaankaplan.movieService.entity.dto.DeleteCommentRequestDto;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
@@ -23,20 +24,24 @@ public class CommentController {
         return commentService.getCommentsByMovieId(movieId, pageNo, pageSize);
     }
 
-    @PostMapping("add")
-    @CircuitBreaker(name = "comment", fallbackMethod = "fallback")
-    @Retry(name="comment")
-    public String addComment(@RequestBody CommentRequestDto comment) {
-        commentService.addComment(comment);
-        return "Yorum başarıyla eklendi";
+    @GetMapping("getCountOfComments/{movieId}")
+    public int getNumberOfCommentsByMovieId(@PathVariable int movieId) {
+        return commentService.getNumberOfCommentsByMovieId(movieId);
     }
 
-    @PostMapping("delete/{commentId}")
-    public void deleteComment(@PathVariable int commentId) {
-        commentService.deleteComment(commentId);
+    @PostMapping("add")
+//    @CircuitBreaker(name = "comment", fallbackMethod = "fallback")
+//    @Retry(name="comment")
+    public Comment addComment(@RequestBody CommentRequestDto comment) {
+        return commentService.addComment(comment);
     }
-    private String fallback(CommentRequestDto commentRequestDto, RuntimeException runtimeException) {
-        return "Bağlantı hatası";
+
+    @PostMapping("delete")
+    public void deleteComment(@RequestBody DeleteCommentRequestDto deleteCommentRequestDto) {
+        commentService.deleteComment(deleteCommentRequestDto);
     }
+//    private Comment fallback(CommentRequestDto commentRequestDto, RuntimeException runtimeException) {
+//        return "Bağlantı hatası";
+//    }
 
 }

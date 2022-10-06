@@ -43,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
 
         return UserAuthenticationResponseDto.builder()
                 .userId(user.getUserId())
+                .fullName(user.getFullName())
                 .email(userLoginRequestDto.getEmail())
                 .token(token)
                 .build();

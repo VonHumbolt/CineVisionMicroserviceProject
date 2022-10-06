@@ -11,4 +11,6 @@ import java.util.List;
 public interface CommentDao extends JpaRepository<Comment, Integer> {
 
     List<Comment> getCommentsByMovieMovieId(int movieId, Pageable pageable);
+
+    int countCommentByMovieMovieId(int movieId);
 }
