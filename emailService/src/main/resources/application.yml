@@ -36,7 +36,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: python3.testmail@gmail.com
-    password: '**********'
+    password: '********'
     protocol: smtp
     test-connection: false
     properties:
