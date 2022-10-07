@@ -13,6 +13,7 @@ import { SaloonTimeService } from '../services/saloonTimeService';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMovieToState, cleanState } from '../store/actions/movieActions';
 import { CommentService } from '../services/commentService';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 export default function DetailPage() {
@@ -107,15 +108,24 @@ export default function DetailPage() {
                     if(result.status == 200) {
                         document.querySelector("#commentArea").value = "";
                         setComments([...comments, result.data])
-                        // toastify - yorumunuz eklendi
+                        toast.success("Yorumunuz eklendi!", {
+                            theme: "light",
+                            position: "top-center"
+                        });
                     }
                 })
 
             } else {
-                // toastify - boş yorum yapılamaz
+                toast.warning("Yorumunuz boş olamaz!", {
+                    theme: "light",
+                    position: "top-center"
+                });
             }
         } else {
-            // toastify - yorum yapmak için lütfen giriş yapın
+            toast.error("Yorum yapmak için lütfen giriş yapın!", {
+                theme: "light",
+                position: "top-center"
+            });
         }
     }
 
@@ -375,16 +385,19 @@ export default function DetailPage() {
 
         {/* MovieTrailer Modal */}
 
-        <div class="modal fade" id="movieTrailerModal" tabindex="-1" aria-labelledby="movieTrailerLabel" aria-hidden="true">
+        <div class="modal fade" id="movieTrailerModal" tabindex="-1" aria-labelledby="movieTrailerLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="movieTrailerLabel">Fragman</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => {
+                        let player = document.getElementById("videoPlayer").getAttribute("src");
+                        document.getElementById("videoPlayer").setAttribute("src", player);
+                    }}></button>
                 </div>
-                <div class="modal-body">
-                    <iframe width="100%" height="500rem" frameborder="0" 
-                        src={movie.movieTrailerUrl + "?autoplay=1"}>
+                <div id='modalBody' class="modal-body">
+                    <iframe id='videoPlayer' width="100%" height="500rem" frameborder="0" 
+                        src={movie.movieTrailerUrl + "?autoplay=0"}>
                     </iframe>
                 </div>
                 
@@ -447,6 +460,7 @@ export default function DetailPage() {
                 </div>
             </div>
         </div>
+        <ToastContainer />
     </div>
   )
 }

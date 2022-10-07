@@ -36,6 +36,10 @@ export default function Navbar() {
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto align-items-center">
+                        {userFromRedux?.roles[0] === "ADMIN" ? 
+                            <li class="nav-item"><a class="nav-link" href="#!" onClick={() => navigate("/addMovie")}>Film Ekle</a></li>
+                        : null}
+
                         <li class="nav-item"><a class="nav-link" href="#!"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             Filmler</a></li>

@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 import { PaymentService } from '../services/paymentService'
 import KaanKaplanTextInput from '../utils/customFormItems/KaanKaplanTextInput'
 
@@ -45,6 +46,15 @@ export default function BuyTicketPage() {
             }
         }
     }
+
+    // function markChairsWithChairId(chairIdList) {
+    //     for(let i=0; i < chairIdList.length; i++) {
+    //         let chair = document.getElementById("E4");
+    //         console.log(chair)
+    //         chair.style.background = "#ff6a00";
+    //         chair.className = "taken";
+    //     }
+    // }
 
   return (
     <div className='ticket-page'>
@@ -98,8 +108,15 @@ export default function BuyTicketPage() {
                                                         data-bs-toggle="collapse" 
                                                         data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo"
                                                         onClick={() => {
-                                                            setTicketItem("placeSection")
-                                                            setChairNumber(studentTicketNumber + adultTicketNumber)
+                                                            if(studentTicketNumber === 0 && adultTicketNumber === 0) {
+                                                                toast.warning("Devam etmek için lütfen bilet seçiniz", {
+                                                                    theme: "dark",
+                                                                    position: "top-center"
+                                                                })
+                                                            } else {
+                                                                setTicketItem("placeSection")
+                                                                setChairNumber(studentTicketNumber + adultTicketNumber)
+                                                            }
                                                         }}>Devam Et</button>
                                                 :  
                                                     <button className='btn btn-outline-dark'
@@ -200,12 +217,26 @@ export default function BuyTicketPage() {
                                                 <button className='btn btn-dark' data-bs-toggle="collapse" 
                                                     data-bs-target="#panelsStayOpen-collapseThree"
                                                     aria-expanded="false" aria-controls="panelsStayOpen-collapseThree"
-                                                    onClick={() => {setTicketItem("paySection")}}>Devam Et</button>
+                                                    onClick={() => {
+                                                        if (chairNumber !== 0) {
+                                                            toast.warning("Lütfen bilet sayınız kadar koltuk seçiniz!", {
+                                                                theme: "dark",
+                                                                position: "top-center"
+                                                            })
+                                                        } else {
+                                                            setTicketItem("paySection")
+                                                        }
+                                                    }}>Devam Et</button>
                                             :
                                                 <button className='btn btn-outline-dark' data-bs-toggle="collapse" 
                                                     data-bs-target="#panelsStayOpen-collapseTwo"
                                                     aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo"
-                                                    onClick={() => setTicketItem("placeSection")}>Değiştir</button>
+                                                    onClick={() => {
+                                                        setTicketItem("placeSection")
+                                                        // markChairsWithChairId(chairNumberList)
+                                                    }}>
+                                                        Değiştir
+                                                </button>
                                             }
                                         </div>
                                 </div>
@@ -349,7 +380,7 @@ export default function BuyTicketPage() {
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <KaanKaplanTextInput name="phone" type="tel" pattern="[0]{1} [0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}" class="form-control" id="phone" placeholder="0 5** *** ** **" required/>
-                                                <label for="phone">Cep Telefonu</label>
+                                                <label for="phone">Telefon - 0 5** *** ** **</label>
                                             </div>
                                             
                                            
@@ -401,7 +432,7 @@ export default function BuyTicketPage() {
 
         </div>
      
-
+        <ToastContainer />
     </div>
   )
 }

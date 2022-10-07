@@ -44,7 +44,10 @@ export default function MainPage() {
                     <div class="container px-5">
                         <h1 class="masthead-heading mb-0">CineVision</h1>
                         <h2 class="masthead-subheading mb-0">
-                            Yüzlerce Film CineVision Salonlarında 
+                            CineVision ile Film Keyfini Kaçırma
+                        </h2>
+                        <h2 class="mt-3">
+                            Vizyondaki en yeni filmler CineVision Sinema Salonlarında
                         </h2>
                         <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Filmler</a>
                     </div>

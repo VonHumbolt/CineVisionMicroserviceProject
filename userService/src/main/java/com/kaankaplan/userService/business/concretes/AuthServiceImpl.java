@@ -5,14 +5,16 @@ import com.kaankaplan.userService.business.abstracts.UserService;
 import com.kaankaplan.userService.core.security.JwtProviderService;
 import com.kaankaplan.userService.entity.User;
 import com.kaankaplan.userService.entity.dto.UserAuthenticationResponseDto;
-import com.kaankaplan.userService.entity.dto.UserRegisterRequestDto;
 import com.kaankaplan.userService.entity.dto.UserLoginRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 
 @Service
@@ -41,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
                 .fullName(user.getFullName())
                 .email(userLoginRequestDto.getEmail())
                 .token(token)
+                .roles(authenticate.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .build();
     }
 

@@ -1,6 +1,7 @@
 import { Form, Formik } from 'formik';
 import React from 'react'
 import { useDispatch } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 import { UserService } from '../services/userService'
 import { addUserToState, removeUserFromState } from '../store/actions/userActions';
 import KaanKaplanTextInput from '../utils/customFormItems/KaanKaplanTextInput';
@@ -16,14 +17,22 @@ export default function LoginModal() {
 
         userService.login(loginDto).then(result => {
 
-            dispatch(addUserToState(result.data))
+            if (result.status == 200) {
+                dispatch(addUserToState(result.data))
+    
+                let closeButton = document.getElementById("close-button");
+                closeButton.click();
 
-            let closeButton = document.getElementById("close-button");
-            closeButton.click();
-
+                toast("Hoşgeldiniz!", {
+                    theme: "colored",
+                    position: "top-center"
+                })
+            }
         }).catch(e => {
-            // toastify - geçersiz şifre veya email!
-            console.log("err")
+            toast.error("Email veya şifre hatalı. Lütfen tekrar deneyin", {
+                theme: "colored",
+                position: "top-center"
+            })
         })
     }
 
@@ -67,7 +76,7 @@ export default function LoginModal() {
                 </div>
             </div>
         </div>
-
+        <ToastContainer />
     </div>
   )
 }

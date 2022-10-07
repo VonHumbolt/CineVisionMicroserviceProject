@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react';
 import { UserService } from '../services/userService'
 import KaanKaplanTextInput from '../utils/customFormItems/KaanKaplanTextInput';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function RegisterModal() {
 
@@ -20,10 +21,19 @@ export default function RegisterModal() {
             };
 
             userService.addCustomer(customer).then(result => {
-                document.querySelector("#loginModalLink").click();
+                if(result.status == 200) {
+                    document.querySelector("#loginModalLink").click();
+                    toast("Hesabınız başarıyla oluşturuldu! Lütfen giriş yapın.", {
+                        theme:"colored",
+                        position:"top-center"
+                    })
+                }
             })
         } else {
-            // toastify
+            toast.error("Parola değerleriniz eşleşmiyor.", {
+                theme: "colored",
+                position: "top-center"
+            });
         }
     }
 
@@ -52,7 +62,7 @@ export default function RegisterModal() {
                                 <label for="email">Email</label>
                             </div>
                             <div className="form-floating mb-3">
-                                <KaanKaplanTextInput type="tel" name="phone" className="form-control" id="phone" placeholder='Telefon' required />
+                                <KaanKaplanTextInput type="tel" name="phone" className="form-control" id="phone" placeholder='Telefon' pattern="[0]{1} [0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}" required />
                                 <label for="phone">Telefon - 0 5** *** ** **</label>
                             </div>
                             <div className="form-floating mb-3">
@@ -77,6 +87,7 @@ export default function RegisterModal() {
                 </div>
             </div>
         </div>
+        <ToastContainer />
     </div>
   )
 }
