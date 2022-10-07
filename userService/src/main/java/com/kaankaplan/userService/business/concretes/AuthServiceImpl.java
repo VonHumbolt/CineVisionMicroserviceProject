@@ -24,11 +24,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
 
     @Override
-    public User register(UserRegisterRequestDto customerRequestDto) {
-        return null;
-    }
-
-    @Override
     public UserAuthenticationResponseDto login(UserLoginRequestDto userLoginRequestDto) {
 
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

@@ -5,6 +5,6 @@ export class MovieImageService {
     apiUrl = "http://localhost:8080/api/movie/images/"
     
     addMovieImage(imageDto) {
-        return axios.get(this.apiUrl + "add", imageDto);
+        return axios.post(this.apiUrl + "add", imageDto);
     }
 }

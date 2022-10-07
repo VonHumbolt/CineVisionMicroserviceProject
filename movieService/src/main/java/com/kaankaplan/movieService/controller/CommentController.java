@@ -30,8 +30,8 @@ public class CommentController {
     }
 
     @PostMapping("add")
-//    @CircuitBreaker(name = "comment", fallbackMethod = "fallback")
-//    @Retry(name="comment")
+    @CircuitBreaker(name = "comment", fallbackMethod = "fallback")
+    @Retry(name="comment")
     public Comment addComment(@RequestBody CommentRequestDto comment) {
         return commentService.addComment(comment);
     }
@@ -40,8 +40,8 @@ public class CommentController {
     public void deleteComment(@RequestBody DeleteCommentRequestDto deleteCommentRequestDto) {
         commentService.deleteComment(deleteCommentRequestDto);
     }
-//    private Comment fallback(CommentRequestDto commentRequestDto, RuntimeException runtimeException) {
-//        return "Bağlantı hatası";
-//    }
+    private Comment fallback(CommentRequestDto commentRequestDto, RuntimeException runtimeException) throws RuntimeException{
+        return null;
+    }
 
 }

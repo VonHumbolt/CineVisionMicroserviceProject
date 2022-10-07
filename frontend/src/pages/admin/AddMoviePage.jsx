@@ -71,10 +71,20 @@ export default function AddMoviePage() {
                         }
                         directorService.add(director).then(result => {
                             values.directorId = result.data.directorId
-                            movieService.addMovie(values).then(result => navigate("/addMovie/" + result.data.movieId));
+                            movieService.addMovie(values).then(result => 
+                                {
+                                    if(result.data != ""){
+                                        navigate("/addMovie/" + result.data.movieId)
+                                    }
+                                });
                         })
                     } else {
-                        movieService.addMovie(values).then(result => navigate("/addMovie/" + result.data.movieId));
+                        movieService.addMovie(values).then(result => 
+                            { 
+                                if(result.data !== ""){
+                                    navigate("/addMovie/" + result.data.movieId)
+                                }
+                            });
                     }
                 }}>
 

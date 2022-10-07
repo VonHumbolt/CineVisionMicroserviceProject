@@ -30,7 +30,6 @@ export default function MainPage() {
     <div>
 
     <body id="page-top">
-       
     <section>
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
             <div class="carousel-indicators">

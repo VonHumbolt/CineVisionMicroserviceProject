@@ -1,5 +1,13 @@
 server:
-  port: 8083
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:password@localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
 spring:
   kafka:
     consumer:
