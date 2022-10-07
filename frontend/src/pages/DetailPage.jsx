@@ -44,27 +44,28 @@ export default function DetailPage() {
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        
+        getNewVisionMovie(movieId);
+    }, [])
+    
+    function getNewVisionMovie(movieId) {
         movieService.getMovieById(movieId).then(result => setMovie(result.data));
         actorService.getActorsByMovieId(movieId).then(result => setActors(result.data))
         cityService.getCitiesByMovieId(movieId).then(result => setCinemaSaloons(result.data))
         movieService.getAllDisplayingMovies().then(result => {
-
             const films = result.data.filter(m => m.movieId != movieId);
             setOtherMovies(films);
         })
         commentService.getCountOfComments(movieId).then(result => setCountOfComments(result.data));
-        getComments(1, 5);
+        getComments(movieId, 1, 5);
+    }
 
-    }, [])
-    
     function getSaloonTimes(saloonId, movieId) {
         saloonTimeService.getMovieSaloonTimeSaloonAndMovieId(saloonId, movieId).then(result => {
             setSaloonTimes(result.data);
         })
     }
 
-    function getComments(pageNo, pageSize=5) {
+    function getComments(movieId, pageNo, pageSize=5) {
         commentService.getCommentsByMovieId(movieId, pageNo, pageSize).then(result => {
             if (comments.length > 0 && pageNo > 1) {
                 setComments([...comments, ...result.data])
@@ -133,7 +134,7 @@ export default function DetailPage() {
 
   return (
     <div>
-        <section className='detail-bg pt-5'>
+        <section id="entry-section" className='detail-bg pt-5'>
             <div className=' container mt-5'>
                 <div className='row gx-0 pt-2 justify-content-center align-items-start'>
                     <div className='col-sm-12 col-md-6 text-center mb-4' >
@@ -301,7 +302,7 @@ export default function DetailPage() {
                                 {currentPage < Math.ceil(countOfComments / 5) && countOfComments > 5 ?
                                     <a href='#!' className='a-pagination lead mt-4'
                                         onClick={() => {
-                                            getComments(currentPage + 1)
+                                            getComments(movieId, currentPage + 1)
                                             setCurrentPage(currentPage+1)
                                         }}>Daha fazla göster</a>
                                 : null}
@@ -333,21 +334,30 @@ export default function DetailPage() {
                 className="mySwiper movie-slider"
             >
                 {otherMovies.map(movie => (
-                    <SwiperSlide key={movie.movieId}>
-                        <div className='slider-item'>
+                    <SwiperSlide key={movie.movieId} >
+                            <div className='slider-item' onClick={()=> {
+                                navigate("/movie/" + movie.movieId)
+                                getNewVisionMovie(movie.movieId);
+                                document.querySelector("#entry-section").scrollIntoView({
+                                    behavior: "smooth"
+                                })
+                            }}>
                             <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
                                 <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
                                     <div class="mb-auto pt-5 text-white"><h3> {movie.movieName} </h3></div>
                                     <div class="p-2 d-grid gap-2">
-                                        <a class="slider-button btn btn-light btn-md rounded"
-                                            onClick={()=> navigate("/movie/" + movie.movieId)}>
-                                            <strong>Yorum Yap </strong>
-                                        </a>
-                                        <a class="slider-button btn btn-light btn-md rounded"
+                                        <a href='#entry-section' className="slider-button btn btn-light btn-md rounded d-none d-sm-block"
                                             onClick={()=> {
                                                 navigate("/movie/" + movie.movieId)
-                                            }
-                                            }>
+                                                getNewVisionMovie(movie.movieId);
+                                            }}>
+                                            <strong>Yorum Yap </strong>
+                                        </a>
+                                        <a href='#entry-section' class="slider-button btn btn-light btn-md rounded d-none d-sm-block"
+                                            onClick={()=> {
+                                                navigate("/movie/" + movie.movieId)
+                                                getNewVisionMovie(movie.movieId);
+                                            }}>
                                             <strong> Bilet Al </strong>
                                         </a>
                                     </div>

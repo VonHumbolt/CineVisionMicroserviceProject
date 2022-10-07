@@ -119,16 +119,16 @@ export default function MainPage() {
         >
             {movies.map(movie => (
                 <SwiperSlide key={movie.movieId}>
-                    <div className='slider-item'>
+                    <div className='slider-item' onClick={()=> navigate("/movie/" + movie.movieId)}>
                         <div className='slider-item-caption d-flex align-items-end justify-content-center h-100 w-100'>
                             <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
                                 <div class="mb-auto pt-5 text-white"><h3> {movie.movieName} </h3></div>
                                 <div class="p-2 d-grid gap-2">
-                                    <a class="slider-button btn btn-light btn-md rounded"
+                                    <a class="slider-button btn btn-light btn-md rounded d-none d-sm-block"
                                         onClick={()=> navigate("/movie/" + movie.movieId)}>
                                         <strong>Yorum Yap </strong>
                                     </a>
-                                    <a class="slider-button btn btn-light btn-md rounded"
+                                    <a class="slider-button btn btn-light btn-md rounded d-none d-sm-block"
                                         onClick={()=> navigate("/movie/" + movie.movieId)}>
                                         <strong> Bilet Al </strong>
                                     </a>
