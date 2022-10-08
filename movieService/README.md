@@ -69,6 +69,12 @@ users authorization.
 </p>
 <p>
 PaymentServiceImpl class's sendTicketDetail method generates email message
-and send this message to Email Service thanks to Kafka Producer.
+which includes ticket detail and send this message to Email Service
+thanks to Kafka Producer.
 </p>
 </ol>
+
+## UML Diagram Of Entities
+<p>
+    <img src="uml_diagram_movie_service.jpeg" />
+</p>
