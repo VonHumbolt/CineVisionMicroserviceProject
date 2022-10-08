@@ -3,6 +3,7 @@ server:
 spring:
   application:
     name: userService
+  ## Database Properties
   data:
     mongodb:
       authentication-database: admin
@@ -12,12 +13,14 @@ spring:
       port: 27017
       host: localhost
       auto-index-creation: true
+  ## Zipkin and Sleuth Properties
   zipkin:
     base-url: http://localhost:9411
   sleuth:
     sampler:
       probability: 1.0
 
+## Eureka Properties
 eureka:
   client:
     service-url:
