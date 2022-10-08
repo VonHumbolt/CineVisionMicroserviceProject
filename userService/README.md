@@ -68,3 +68,8 @@ isUserAdmin methods. These methods get the token which send with request
 and they decide whether the user is customer or admin. 
     </p>
 </ol>
+
+## UML Diagram Of Entities
+<p>
+    <img src="uml_diagram_user_service.jpeg" />
+</p>
