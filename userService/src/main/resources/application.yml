@@ -3,7 +3,7 @@ server:
 spring:
   application:
     name: userService
-  ## Database Properties
+  ## MongoDB Properties
   data:
     mongodb:
       authentication-database: admin
