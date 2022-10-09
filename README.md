@@ -181,3 +181,4 @@ on <b> localhost:3000 </b>.
 
 
 ## Project UI
+<img src="homa_page.jpg">
