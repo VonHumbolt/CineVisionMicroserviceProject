@@ -27,4 +27,4 @@ in this file.
 </ol>
 
 ## Eureka Server Panel
-<img src="">
+<img src="eureka_panel.jpg">

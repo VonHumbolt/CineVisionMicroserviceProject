@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: movieService
+  # PostgreSql Properties
   datasource:
     username: 'postgres'
     url: jdbc:postgresql://localhost:5432/cine_vision
@@ -17,6 +18,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: 'true'
+  # Apache Kafka Producer Properties
   kafka:
     producer:
       bootstrap-servers: localhost:9092
@@ -29,12 +31,15 @@ spring:
               mapping: event:com.kaankaplan.movieService.entity.dto.EmailMessageKafkaDto
     topic:
       name: email_topics
+  # Zipkin Properties
   zipkin:
     base-url: http://localhost:9411
+  # Sleuth Properties
   sleuth:
     sampler:
       probability: 1.0
 
+# Eureka Properties
 eureka:
   client:
     service-url:
@@ -42,7 +47,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 
-# Circuit Breaker
+# Circuit Breaker Properties
 management:
   health:
     circuitbreakers:
