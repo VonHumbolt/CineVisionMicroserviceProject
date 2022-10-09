@@ -356,14 +356,14 @@ export default function DetailPage() {
                                 <div class="d-flex align-items-center flex-column mb-3" style={{height: "20rem"}}>
                                     <div class="mb-auto pt-5 text-white"><h3> {movie.movieName} </h3></div>
                                     <div class="p-2 d-grid gap-2">
-                                        <a href='#entry-section' className="slider-button btn btn-light btn-md rounded d-none d-sm-block"
+                                        <a className="slider-button btn btn-light btn-md rounded d-none d-sm-block"
                                             onClick={()=> {
                                                 navigate("/movie/" + movie.movieId)
                                                 getNewVisionMovie(movie.movieId);
                                             }}>
                                             <strong>Yorum Yap </strong>
                                         </a>
-                                        <a href='#entry-section' class="slider-button btn btn-light btn-md rounded d-none d-sm-block"
+                                        <a class="slider-button btn btn-light btn-md rounded d-none d-sm-block"
                                             onClick={()=> {
                                                 navigate("/movie/" + movie.movieId)
                                                 getNewVisionMovie(movie.movieId);

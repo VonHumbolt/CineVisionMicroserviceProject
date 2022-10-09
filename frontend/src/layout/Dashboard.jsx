@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Router, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import AddActorsAndCityToMovie from '../pages/admin/AddActorsAndCityToMovie'
 import AddMoviePage from '../pages/admin/AddMoviePage'
 import BuyTicketPage from '../pages/BuyTicketPage'
@@ -15,7 +15,7 @@ export default function Dashboard() {
   const userFromRedux = useSelector(state => state?.user?.payload)
 
   return (
-    <div> {console.log(userFromRedux)}
+    <div> 
       <Routes>
         <Route path={"/"} element={<MainPage/>} />
         <Route path={"/movie/:movieId"} element={<DetailPage/>} />

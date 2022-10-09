@@ -158,6 +158,9 @@ run this class. If this module is started successfully, you can view
 all running services in the eureka server using with eureka panel which is
 running on localhost:8761 or localhost:8080/eureka/web.
 </p>
+<h5>Important Note: <br>
+Change mail configurations in application.yml file with your own configurations.
+</h5>
 
 <h3> <li>Start React (Frontend) Application</li> </h3>
 <p> 
@@ -182,3 +185,5 @@ on <b> localhost:3000 </b>.
 
 ## Project UI
 <img src="homa_page.jpg">
+
+[For more images](https://github.com/VonHumbolt/CineVisionMicroserviceProject/tree/main/frontend)

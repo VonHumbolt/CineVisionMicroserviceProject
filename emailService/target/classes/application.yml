@@ -39,8 +39,8 @@ spring:
     default-encoding: UTF-8
     host: smtp.gmail.com
     port: 587
-    username: python3.testmail@gmail.com
-    password: obndjvibcsqezjuq
+    username: python3.testmail@gmail.com # CHANGE with your email.
+    password: weyfnjlapkemtbpb    # CHANGE with your password.
     protocol: smtp
     test-connection: false
     properties:

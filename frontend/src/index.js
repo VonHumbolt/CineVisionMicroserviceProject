@@ -7,12 +7,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from './store/configureStore';
 import 'react-toastify/dist/ReactToastify.css';
+import ScrollToTop from './utils/utilPages/ScrollToTop';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = configureStore()
 root.render(
   <Provider store={store}>
     <BrowserRouter>
+      <ScrollToTop />
       <App />
     </BrowserRouter>
   </Provider>
