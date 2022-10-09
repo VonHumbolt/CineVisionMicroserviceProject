@@ -34,25 +34,25 @@ was completed using Bootstrap and Css.
 Movies in theater and upcoming movies is listed in th slider on this page.
 Users go to movie detail by clicking the movie.
 
-<img src="main_page.jpg">
+<img src="public/ui_images/main_page.jpg">
 
 <h3> <li>Movie Detail</li> </h3>
 Movie's plot, actors, director and other details in this page. Also, users can 
 read and write comments in here. If people want to buy tickets,
 they can choose a city and movie theater and go to the payment page.
 
-<img src="detail_page.jpg">
-<img src="detail_page2.jpg">
+<img src="public/ui_images/detail_page.jpg">
+<img src="public/ui_images/detail_page2.jpg">
 
 <h3> <li>Payment </li> </h3>
 People can choose their seats in the saloon and how many tickets they want to buy
 in this page. After that they can purchase tickets with their credit card number,
 email and name. 
-<img src="payment_page.jpg">
-<img src="payment_page2.jpg">
+<img src="public/ui_images/payment_page.jpg">
+<img src="public/ui_images/payment_page2.jpg">
 
 <h3> <li>Responsive Design </li> </h3>
 <p>
-<img src="responsive2.jpg" height="700">
-<img src="responsive.jpg" height="700">
+<img src="public/ui_images/responsive2.jpg" height="700">
+<img src="public/ui_images/responsive.jpg" height="700">
 </p>
