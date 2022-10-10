@@ -9,8 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="eureka-server" />
-        <module name="movieService" />
         <module name="emailService" />
+        <module name="movieService" />
         <module name="userService" />
       </profile>
     </annotationProcessing>

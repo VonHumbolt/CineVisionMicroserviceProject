@@ -51,6 +51,13 @@ email and name.
 <img src="public/ui_images/payment_page.jpg">
 <img src="public/ui_images/payment_page2.jpg">
 
+<h3> <li>Admin Add Movie Panel </li> </h3>
+<p>
+Only admins can view this page because this page is protected by ProtectedRoute.
+Whether the user is an admin is checked with the Jwt token.
+</p>
+<img src="public/ui_images/admin_addmovie_page.jpg">
+
 <h3> <li>Responsive Design </li> </h3>
 <p>
 <img src="public/ui_images/responsive2.jpg" height="700">

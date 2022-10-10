@@ -19,7 +19,9 @@ Finally, they complete the payment process after entering information
 such as credit card information, email, name and surname.
 If the payment is successful, the ticket details are sent to the email which entered by the user.
 If people want to share their opinions about the movie, they can write comments on the movie detail page.
-However, People must create an account to comments on movies.
+However, People must create an account to comments on movies. Only admins
+can add movie,actor or director to the system. This authorization process is controlled
+with Jwt token.
 
 ## Technologies Of Project
 There are many technologies in this project. These are:
@@ -184,6 +186,7 @@ on <b> localhost:3000 </b>.
 
 
 ## Project UI
+
 <img src="homa_page.jpg">
 
 [For more images](https://github.com/VonHumbolt/CineVisionMicroserviceProject/tree/main/frontend)

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>userService</artifactId>
+    <artifactId>user-service</artifactId>
 
     <name>userService</name>
     <!-- FIXME change it to the project's website -->
