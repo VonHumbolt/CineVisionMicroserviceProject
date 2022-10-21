@@ -2,7 +2,6 @@ package com.kaankaplan.movieService.controller;
 
 import com.kaankaplan.movieService.business.abstracts.MovieService;
 import com.kaankaplan.movieService.entity.Movie;
-import com.kaankaplan.movieService.entity.dto.CityRequestDto;
 import com.kaankaplan.movieService.entity.dto.MovieRequestDto;
 import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;

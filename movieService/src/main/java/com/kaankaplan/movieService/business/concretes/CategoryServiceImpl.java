@@ -4,6 +4,7 @@ import com.kaankaplan.movieService.business.abstracts.CategoryService;
 import com.kaankaplan.movieService.dao.CategoryDao;
 import com.kaankaplan.movieService.entity.Category;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryDao categoryDao;
 
+    @Cacheable(value = "categories")
     @Override
     public List<Category> getall() {
 

@@ -68,6 +68,13 @@ services:
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+
 networks:
   postgres:
     driver: bridge

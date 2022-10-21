@@ -7,6 +7,8 @@ import com.kaankaplan.movieService.entity.Actor;
 import com.kaankaplan.movieService.entity.Movie;
 import com.kaankaplan.movieService.entity.dto.ActorRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,11 +29,13 @@ public class ActorServiceImpl implements ActorService {
         return actorDao.getActorsByMovieMovieId(movieId);
     }
 
+    @Cacheable(value = "actors")
     @Override
     public List<Actor> getall() {
         return actorDao.findAll(Sort.by(Sort.Direction.ASC, "actorName"));
     }
 
+    @CacheEvict(value = "actors", allEntries = true)
     @Override
     public void addActors(ActorRequestDto actorRequestDto) {
 

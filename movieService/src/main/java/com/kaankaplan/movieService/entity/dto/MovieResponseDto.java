@@ -6,13 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieResponseDto {
+public class MovieResponseDto implements Serializable {
 
     private int movieId;
     private String movieName;

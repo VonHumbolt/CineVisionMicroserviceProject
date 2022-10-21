@@ -5,6 +5,8 @@ import com.kaankaplan.movieService.dao.DirectorDao;
 import com.kaankaplan.movieService.entity.Director;
 import com.kaankaplan.movieService.entity.dto.DirectorRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,6 +20,7 @@ public class DirectorServiceImpl implements DirectorService {
     private final DirectorDao directorDao;
     private final WebClient.Builder webClientBuilder;
 
+    @Cacheable(value = "directors")
     @Override
     public List<Director> getall() {
         return directorDao.findAll(Sort.by(Sort.Direction.ASC, "directorName"));
@@ -28,6 +31,7 @@ public class DirectorServiceImpl implements DirectorService {
         return directorDao.getDirectorByDirectorId(directorId);
     }
 
+    @CacheEvict(value = "directors", allEntries = true)
     @Override
     public Director add(DirectorRequestDto directorRequestDto)
     {

@@ -4,7 +4,8 @@ to movies. Movies, actors, directors entities are stored in PostgreSql
 database. This Movie Service communicates with User and Email Services.
 For Synchronous communication with User Service, it uses WebFlux.
 And, Asynchronous communication with Email Service, it uses Apache Kafka.
-This service is built using N-layered architecture.
+This service is built using N-layered architecture. Directors, Movies, 
+Actors, Cities was cached with Redis. 
 
 ## Techologies
 <ul>
@@ -16,6 +17,7 @@ This service is built using N-layered architecture.
     <li>Resilience4j</li>
     <li>Zipkin</li>
     <li>Sleuth</li>
+    <li>Redis</li>
     <li>PostgreSql</li>
 </ul>
 

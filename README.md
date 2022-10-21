@@ -33,7 +33,7 @@ There are many technologies in this project. These are:
     <li>Spring Data Jpa</li>
     <li>Spring Security</li>
     <li>Lombok</li>
-    <li>WebFlux</li>
+    <li>WebClient</li>
     <li>Apache Kafka</li>
     <li>Jwt</li>
     <li>Java Mail Sender</li>
@@ -41,6 +41,7 @@ There are many technologies in this project. These are:
     <li>Resilience4j</li>
     <li>PostgreSql</li>
     <li>MongoDB</li>
+    <li>Redis</li>
     <li>Docker</li>
 </ul>
 <h5> Frontend Techologies </h5>
@@ -81,7 +82,8 @@ was used for encrypting user's passwords and generating Jwt token.
 <br>
 In the Movie Service, PostgreSql used as database and Spring Data Jpa
 was used. Webflux and Apache Kafka was used for communication with other services.
-Resilience4J Circuit Breaker was used here.
+Resilience4J Circuit Breaker was used here. Displaying and coming soon movies
+are cached using with Redis.
 <br>
 <br>
 In the Email Service, Apache Kafka was used for receiving the 

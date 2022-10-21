@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -15,7 +16,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name= "director")
-public class Director {
+public class Director implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

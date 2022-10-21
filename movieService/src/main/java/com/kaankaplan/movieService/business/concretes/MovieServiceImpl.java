@@ -2,16 +2,16 @@ package com.kaankaplan.movieService.business.concretes;
 
 import com.kaankaplan.movieService.business.abstracts.CategoryService;
 import com.kaankaplan.movieService.business.abstracts.DirectorService;
-import com.kaankaplan.movieService.business.abstracts.MovieImageService;
 import com.kaankaplan.movieService.business.abstracts.MovieService;
 import com.kaankaplan.movieService.dao.MovieDao;
 import com.kaankaplan.movieService.entity.Category;
 import com.kaankaplan.movieService.entity.Director;
 import com.kaankaplan.movieService.entity.Movie;
-import com.kaankaplan.movieService.entity.MovieImage;
 import com.kaankaplan.movieService.entity.dto.MovieRequestDto;
 import com.kaankaplan.movieService.entity.dto.MovieResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -26,11 +26,13 @@ public class MovieServiceImpl implements MovieService {
     private final DirectorService directorService;
     private final WebClient.Builder webClientBuilder;
 
+    @Cacheable(value = "displaying_movies")
     @Override
     public List<MovieResponseDto> getAllDisplayingMoviesInVision() {
         return movieDao.getAllDisplayingMoviesInVision();
     }
 
+    @Cacheable(value = "comingSoon_movies")
     @Override
     public List<MovieResponseDto> getAllComingSoonMovies() {
         return movieDao.getAllComingSoonMovies();
@@ -46,6 +48,7 @@ public class MovieServiceImpl implements MovieService {
         return movieDao.getMovieByMovieId(movieId);
     }
 
+    @CacheEvict(value = "comingSoonMovie", allEntries = true)
     @Override
     public Movie addMovie(MovieRequestDto movieRequestDto) {
 
