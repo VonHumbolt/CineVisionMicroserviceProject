@@ -2,7 +2,8 @@ import axios from "axios";
 
 export class ActorService {
 
-    apiUrl = "http://localhost:8080/api/movie/actors/"
+    apiUrl = process.env.REACT_APP_API_URL + "/api/movie/actors/";
+
 
     getActorsByMovieId(movieId) {
         return axios.get(this.apiUrl + "getActorsByMovieId/" + movieId);

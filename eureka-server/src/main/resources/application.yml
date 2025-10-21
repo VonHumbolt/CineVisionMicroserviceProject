@@ -1,22 +1,37 @@
 server:
   port: 8761
 
+#spring:
+#  security:
+#    user:
+#      name: admin
+#      password: admin123
 spring:
   application:
     name: eureka-server
-  # Zipkin Properties
   zipkin:
-    base-url: http://localhost:9411
-  # Sleuth Properties
+    base-url: http://zipkin:9411   # FIXED: use service name
   sleuth:
     sampler:
       probability: 1.0
 
-# Eureka Properties
 eureka:
   client:
     fetch-registry: false
     register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
   instance:
-    hostname: localhost
+    hostname: eureka-server        # FIXED: service name instead of localhost
     prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 8761 
+  endpoint:
+    health:
+      show-details: always

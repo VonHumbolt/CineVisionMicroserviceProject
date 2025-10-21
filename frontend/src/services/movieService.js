@@ -2,7 +2,8 @@ import axios from "axios";
 
 export class MovieService {
 
-    apiUrl = "http://localhost:8080/api/movie/movies/"
+    apiUrl = process.env.REACT_APP_API_URL + "/api/movie/movies/";
+
 
     getAllDisplayingMovies() {
         return axios.get(this.apiUrl + "displayingMovies");

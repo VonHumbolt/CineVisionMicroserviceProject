@@ -2,7 +2,8 @@ import axios from "axios";
 
 export class CityService {
 
-    apiUrl = "http://localhost:8080/api/movie/cities/"
+    apiUrl = process.env.REACT_APP_API_URL + "/api/movie/cities/";
+
 
     getCitiesByMovieId(movieId) {
         return axios.get(this.apiUrl + "getCitiesByMovieId/" + movieId);

@@ -5,7 +5,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka:password@localhost:8761/eureka
+      defaultZone: http://admin:admin123@localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
 
@@ -52,3 +52,12 @@ spring:
 
   application:
     name: emailService
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always

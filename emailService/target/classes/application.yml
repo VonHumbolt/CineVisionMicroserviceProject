@@ -1,0 +1,63 @@
+server:
+  port: 0
+
+## Eureka Properties
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin123@localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+## Apache Kafka Consumer Properties
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: email
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+            type:
+              mapping: event:com.kaankaplan.emailService.dto.EmailMessageKafkaDto
+    topic:
+      name: email_topics
+  # Zipkin Properties
+  zipkin:
+    base-url: http://localhost:9411
+  # Sleuth Properties
+  sleuth:
+    sampler:
+      probability: 1.0
+  # Mail Properties
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: python3.testmail@gmail.com # CHANGE with your email.
+    password: '*******'    # CHANGE with your password.
+    protocol: smtp
+    test-connection: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  application:
+    name: emailService
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always

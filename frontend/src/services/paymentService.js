@@ -2,7 +2,9 @@ import axios from "axios";
 
 export class PaymentService {
 
-    apiUrl = "http://localhost:8080/api/movie/payments/"
+
+    apiUrl = process.env.REACT_APP_API_URL + "/api/movie/payments/";
+
 
     sendTicketDetail(ticketDetail) {
         return axios.post(this.apiUrl + "sendTicketDetail", ticketDetail);

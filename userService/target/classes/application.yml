@@ -1,30 +1,33 @@
 server:
-  port: 0
+  port: 8083
+
 spring:
   application:
     name: userService
-  ## MongoDB Properties
+
+  # Corrected MongoDB Properties
   data:
     mongodb:
-      authentication-database: admin
-      username: rootuser
-      password: rootpass
-      database: user
-      port: 27017
-      host: localhost
+      # Use the service name 'mongodb'
+      uri: mongodb://rootuser:rootpass@mongodb:27017/cine_vision?authSource=admin
       auto-index-creation: true
-  ## Zipkin and Sleuth Properties
+
+  # Corrected Zipkin Properties
   zipkin:
-    base-url: http://localhost:9411
+    # Use the service name 'zipkin'
+    base-url: http://zipkin:9411
+  
+  # Sleuth Properties
   sleuth:
     sampler:
       probability: 1.0
 
-## Eureka Properties
+# Corrected Eureka Properties
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka:password@localhost:8761/eureka
+      # Use the service name of your Eureka server
+      defaultZone: http://admin:admin123@eureka-server:8761/eureka
     fetch-registry: true
     register-with-eureka: true
 
@@ -32,3 +35,13 @@ eureka:
 jwt:
   secret:
     key: secret_secret_secret_secret_secret_secret_secret_secret_secret_secret
+
+# Actuator Properties
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

@@ -1,18 +1,18 @@
 server:
-  port: 0
+  port: 8082
 
 spring:
   application:
-    name: movieService
-  redis:
-    host: localhost
-    port: 6379
-  # PostgreSql Properties
+    name: movie-service
+
+  # Corrected PostgreSQL Properties
   datasource:
     username: 'postgres'
-    url: jdbc:postgresql://localhost:5432/cine_vision
+    # Use the service name 'postgres' to connect to the container
+    url: jdbc:postgresql://postgres:5432/cine_vision
     password: '12345'
     driver-class-name: org.postgresql.Driver
+  
   jpa:
     properties:
       hibernate:
@@ -21,10 +21,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: 'true'
-  # Apache Kafka Producer Properties
+  
+  # Corrected Apache Kafka Producer Properties
   kafka:
     producer:
-      bootstrap-servers: localhost:9092
+      # Use the service name 'kafka'
+      bootstrap-servers: kafka:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
@@ -34,21 +36,24 @@ spring:
               mapping: event:com.kaankaplan.movieService.entity.dto.EmailMessageKafkaDto
     topic:
       name: email_topics
-  # Zipkin Properties
+
+  # Corrected Zipkin Properties
   zipkin:
-    base-url: http://localhost:9411
+    # Use the service name 'zipkin'
+    base-url: http://zipkin:9411
+  
   # Sleuth Properties
   sleuth:
     sampler:
       probability: 1.0
-  cache:
-    cache-names: "displaying_movies, comingSoon_movies"
 
-# Eureka Properties
+# Corrected Eureka Properties
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka:password@localhost:8761/eureka
+      # Use the service name of your Eureka server
+      # The password format is also corrected
+      defaultZone: http://admin:admin123@eureka-server:8761/eureka
     fetch-registry: true
     register-with-eureka: true
 
@@ -64,8 +69,8 @@ management:
   endpoint:
     health:
       show-details: always
-  server:
-    port: 8000
+  
+    
 resilience4j:
   circuitbreaker:
     instances:

@@ -1,4 +1,4 @@
-version: '3'
+# PR Pract 
 services:
   postgres:
     container_name: postgres
@@ -13,8 +13,14 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgres
+      - cinevision-net
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cine_vision"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   mongodb:
     container_name: mongodb
     image: mongo
@@ -25,6 +31,15 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=rootuser
       - MONGO_INITDB_ROOT_PASSWORD=rootpass
+    networks:
+      - cinevision-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh -u rootuser -p rootpass --authenticationDatabase admin --eval 'db.runCommand({ping:1})' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   mongo-express:
     container_name: mongo-express
     image: mongo-express
@@ -35,12 +50,23 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
       - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
       - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - cinevision-net
 
   zookeeper:
     container_name: zookeeper
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
+    restart: unless-stopped
+    networks:
+      - cinevision-net
+
   kafka:
     container_name: kafka
     image: wurstmeister/kafka
@@ -49,9 +75,11 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-
     depends_on:
       - zookeeper
+    restart: unless-stopped
+    networks:
+      - cinevision-net
 
   keycloak:
     container_name: keycloak
@@ -63,23 +91,166 @@ services:
       - "8181:8080"
     command:
       - start-dev
+    restart: unless-stopped
+    networks:
+      - cinevision-net
+
   zipkin:
     container_name: zipkin
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
+    restart: unless-stopped
+    networks:
+      - cinevision-net
 
   redis:
     container_name: redis
     image: redis
     ports:
       - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - cinevision-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    environment:
+      - spring.application.name=eureka-server
+    networks:
+      - cinevision-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8761/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      movie-service:
+        condition: service_started
+      user-service:
+        condition: service_started
+    environment:
+      - spring.application.name=api-gateway
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+    restart: unless-stopped
+    networks:
+      - cinevision-net
+
+  movie-service:
+    build:
+      context: ./movieService
+      dockerfile: Dockerfile
+    ports:
+    - "8082:8082"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+       - spring.application.name=movie-service
+       - spring.datasource.url=jdbc:postgresql://postgres:5432/cine_vision
+       - spring.datasource.username=postgres
+       - spring.datasource.password=12345
+       - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - cinevision-net
+
+  user-service:
+    build:
+      context: ./userService
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - spring.application.name=userService
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+      - spring.data.mongodb.uri=mongodb://rootuser:rootpass@mongodb:27017/cine_vision?authSource=admin
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/api/user/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+    - cinevision-net
+
+  email-service:
+    build:
+      context: ./emailService
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    environment:
+      - spring.application.name=emailService
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+      - spring.kafka.consumer.bootstrap-servers=kafka:9092
+    restart: unless-stopped
+    networks:
+      - cinevision-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+     - REACT_APP_API_URL=http://localhost:8080   # tell React to use API Gateway
+    # depends_on:
+    #   api-gateway:
+    #     condition: service_healthy
+    stdin_open: true   # keep container alive for React dev server
+    tty: true
+    restart: unless-stopped
+    networks:
+    - cinevision-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 
 networks:
-  postgres:
+  cinevision-net:
     driver: bridge
-#  default:
-#    name: mongodb_network
+
 volumes:
   postgres:
   data:
